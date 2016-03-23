@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ResourceNode : MonoBehaviour {
 
-	public float ResourceAmt;
+	public int ResourceAmt;
 	public string ResourceType;
 	
 	
