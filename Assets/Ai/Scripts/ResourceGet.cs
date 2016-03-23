@@ -2,15 +2,15 @@
 using System.Collections;
 
 public class ResourceGet : MonoBehaviour {
-	
+
+	public string Resource;
 
 
+    
 
 
-
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 	
 	
@@ -18,14 +18,15 @@ public class ResourceGet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	
-	
-	}
+
+
+
+    }
 	
 	void GrabResources () {
-		if () {
-			
+		if (true) {
+			Collision.gameObject.ResourceAmt = Collision.gameObject.ResourceAmt - 1;
+			Resource = Collision.gameObject.ResourceType;
 		}
 			
 	}

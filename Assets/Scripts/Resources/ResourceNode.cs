@@ -7,13 +7,7 @@ public class ResourceNode : MonoBehaviour {
 	public string ResourceType;
 	
 	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

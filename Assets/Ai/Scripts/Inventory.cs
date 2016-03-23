@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour {
 	public float MaxVolume;
 	public float Weight;
 	public float MaxWeight;
-	public bool CanGrab;
+	public bool CanHold;
 	
 	
 	// Use this for initialization
@@ -19,11 +19,19 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (MaxWeight < Weight) {
-			CanGrab = false;
-		} else {
-			CanGrab = true;
+			CanHold = false;
 		}
-	}
+        else {
+			CanHold = true;
+		}
+        if (MaxVolume < Volume)
+        {
+            CanHold = false;
+        }
+        else {
+            CanHold = true;
+        }
+    }
 	
 	
 	
