@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour
+{
 	
 	//Initial Statements
 	public float Volume;
@@ -12,30 +13,39 @@ public class Inventory : MonoBehaviour {
 	
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+
+	}
+
+	void CheckLift ()
+	{
 		if (MaxWeight < Weight) {
 			CanHold = false;
-		}
-        else {
+		} else {
 			CanHold = true;
 		}
-        if (MaxVolume < Volume)
-        {
-            CanHold = false;
-        }
-        else {
-            CanHold = true;
-        }
-    }
-	
-	
-	
-	
+		if (MaxVolume < Volume) {
+			CanHold = false;
+		} else {
+			CanHold = true;
+		}
+	}
+
+	public class Items
+	{
+		public string Name { set; get; }
+
+		public float Volume { set; get; }
+
+		public float Mass { set; get; }
+	}
 	
 	
 	

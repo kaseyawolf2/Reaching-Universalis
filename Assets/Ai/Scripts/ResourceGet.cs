@@ -1,31 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ResourceGet : MonoBehaviour {
+public class ResourceGet : MonoBehaviour
+{
 
 	public string Resourcetype;
 	public int ResourceAmount;
-	public GameObject Test;
+	public GameObject TargetNode;
     
 
 
-    // Use this for initialization
-    void Start () {
-        ResourceAmount = Test.GetComponent<ResourceNode>().ResourceAmt;
-        Resourcetype = Test.GetComponent<ResourceNode>().ResourceType;
-    }
+	// Use this for initialization
+	void Start ()
+	{
+		ResourceAmount = TargetNode.GetComponent<ResourceNode> ().ResourceAmt;
+		Resourcetype = TargetNode.GetComponent<ResourceNode> ().ResourceType;
+	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
 
 
-    }
-	
-	void GrabResources () {
+	}
+
+	void GrabResources ()
+	{
 		if (ResourceAmount > 0) {
 			Debug.Log ("It Worked");
-			gameObject.GetComponent<>()
+			gameObject.GetComponent<Inventory> ();
 		}
 			
 	}

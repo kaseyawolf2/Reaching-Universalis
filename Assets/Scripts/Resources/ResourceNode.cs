@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ResourceNode : MonoBehaviour {
+public class ResourceNode : MonoBehaviour
+{
 
 	public int ResourceAmt;
 	public string ResourceType;
@@ -12,7 +13,8 @@ public class ResourceNode : MonoBehaviour {
 	
 	
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 	
 	
 	
@@ -22,7 +24,8 @@ public class ResourceNode : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 
 
 
