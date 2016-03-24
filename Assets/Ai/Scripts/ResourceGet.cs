@@ -3,7 +3,6 @@ using System.Collections;
 
 public class ResourceGet : MonoBehaviour
 {
-
 	public string Resourcetype;
 	public int ResourceAmount;
 	public GameObject TargetNode;
@@ -21,8 +20,6 @@ public class ResourceGet : MonoBehaviour
 	void Update ()
 	{
 
-
-
 	}
 
 	void GrabResources ()
@@ -33,14 +30,5 @@ public class ResourceGet : MonoBehaviour
 		}
 			
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

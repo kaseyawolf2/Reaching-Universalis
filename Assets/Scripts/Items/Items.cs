@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace AssemblyCSharp
 {
-	public class Items
+	public class Item
 	{
 		public string Name { set; get; }
 
@@ -12,4 +13,3 @@ namespace AssemblyCSharp
 		public float Mass { set; get; }
 	}
 }
-
