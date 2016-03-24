@@ -2,14 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AssemblyCSharp
+public class ItemsList : MonoBehaviour
 {
-	public class Item
+	public List<ItemClass> Items = new List<ItemClass> ();
+
+
+
+
+	// Use this for initialization
+	void Start ()
 	{
-		public string Name { set; get; }
-
-		public float Volume { set; get; }
-
-		public float Mass { set; get; }
+		Items.Add (new ItemClass { Name = "Test", Volume = 2, Mass = 4 });
+	
+	
+	
+	
+	
+	
 	}
 }

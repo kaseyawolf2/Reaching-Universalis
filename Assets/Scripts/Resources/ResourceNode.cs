@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class ResourceNode : MonoBehaviour
 {
 	public int ResourceAmt;
 	public string ResourceType;
 
-	// Use this for initialization
 	void Start ()
 	{
-		List<Item> Items = new List<Item> ();
-		Items.Add (new Item { Name = "Test", Volume = 2, Mass = 4 });
-		Debug.Log (Items.Count);
-		Debug.Log (Items);
-
+		
+		Debug.Log (ItemsList.Items.Count);
+		foreach (ItemsList.Item c in ItemsList.Items)
+			Debug.Log ("Name: " + "'" + c.Name + "'" + " Volume: " + c.Volume + " Mass: " + c.Mass);
 	}
 	
 	// Update is called once per frame
@@ -25,13 +22,4 @@ public class ResourceNode : MonoBehaviour
 	
 	
 
-}
-
-public class Item
-{
-	public string Name { set; get; }
-
-	public float Volume { set; get; }
-
-	public float Mass { set; get; }
 }
