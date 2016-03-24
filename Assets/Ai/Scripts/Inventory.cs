@@ -38,14 +38,7 @@ public class Inventory : MonoBehaviour
 		}
 	}
 
-	public class Items
-	{
-		public string Name { set; get; }
 
-		public float Volume { set; get; }
-
-		public float Mass { set; get; }
-	}
 	
 	
 	
