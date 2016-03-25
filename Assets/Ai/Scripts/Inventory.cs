@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
 
 	}
 
-	void CheckLift ()
+	public void CheckLift ()
 	{
 		if (MaxWeight < Weight) {
 			CanHold = false;
