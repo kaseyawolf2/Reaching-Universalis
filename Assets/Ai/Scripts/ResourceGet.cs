@@ -6,7 +6,6 @@ public class ResourceGet : MonoBehaviour
 	public string Resourcetype;
 	public int ResourceAmount;
 	public GameObject TargetNode;
-    
 
 
 	// Use this for initialization
@@ -14,14 +13,11 @@ public class ResourceGet : MonoBehaviour
 	{
 		ResourceAmount = TargetNode.GetComponent<ResourceNode> ().ResourceAmt;
 		Resourcetype = TargetNode.GetComponent<ResourceNode> ().ResourceType;
-		Debug.Log ("test");
-		Debug.Log (ItemsList.Items.Count);
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-
 	}
 
 	void GrabResources ()

@@ -1,0 +1,5 @@
+<ListOfTask>
+  <Task file="" description="Add Global Item List" completed="True" />
+  <Task file="" description="Get correct item into inventory" />
+  <Task file="" description="Create Inventory" />
+</ListOfTask>

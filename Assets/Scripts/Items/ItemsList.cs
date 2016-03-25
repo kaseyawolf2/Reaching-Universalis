@@ -4,20 +4,11 @@ using System.Collections.Generic;
 
 public class ItemsList : MonoBehaviour
 {
-	public List<ItemClass> Items = new List<ItemClass> ();
+	static public List<Item> Items = new List<Item> ();
 
-
-
-
-	// Use this for initialization
-	void Start ()
+	void Main ()
 	{
-		Items.Add (new ItemClass { Name = "Test", Volume = 2, Mass = 4 });
-	
-	
-	
-	
-	
-	
+		
 	}
+
 }
