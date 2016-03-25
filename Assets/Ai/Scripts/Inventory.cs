@@ -36,13 +36,13 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	public void GetMV () {
+	void GetMV () {
 		ResourceVol = gameObject.GetComponent<ResourceGet> ().ResourceVol;
 		ResourceMas = gameObject.GetComponent<ResourceGet> ().ResourceMas;
 		ResourceName = gameObject.GetComponent<ResourceGet> ().Resourcetype;
 	}
 
-	public void CheckRoom () {
+	void CheckRoom () {
 		AvlMass = MaxMass - Mass;
 		AvlVolume = MaxVolume - Volume;
 	}
