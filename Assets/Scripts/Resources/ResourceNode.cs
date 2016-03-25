@@ -10,7 +10,7 @@ public class ResourceNode : MonoBehaviour
 	{
 		
 		Debug.Log (ItemsList.Items.Count);
-		foreach (ItemsList.Item c in ItemsList.Items)
+		foreach (Item c in ItemsList.Items)
 			Debug.Log ("Name: " + "'" + c.Name + "'" + " Volume: " + c.Volume + " Mass: " + c.Mass);
 	}
 	

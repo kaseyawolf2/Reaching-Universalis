@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ItemClass
+public class Item
 {
 	public string Name { get; set; }
 

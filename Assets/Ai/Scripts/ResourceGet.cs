@@ -15,7 +15,7 @@ public class ResourceGet : MonoBehaviour
 		ResourceAmount = TargetNode.GetComponent<ResourceNode> ().ResourceAmt;
 		Resourcetype = TargetNode.GetComponent<ResourceNode> ().ResourceType;
 		Debug.Log ("test");
-		Debug.Log (ItemsList.Items.count);
+		Debug.Log (ItemsList.Items.Count);
 	}
 	
 	// Update is called once per frame
