@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Item {
+	public int IDNum { get; set; }
+	
 	public string Name { get; set; }
 
 	public float Volume { get; set; }
