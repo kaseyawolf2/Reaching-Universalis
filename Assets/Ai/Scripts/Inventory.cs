@@ -19,7 +19,6 @@ public class Inventory : MonoBehaviour {
 
 	//Inventorys
 	public List<Item> HeldItems = new List<Item> ();
-	public List<Item> AssetList = new List<Item> ();
 
 	void start(){
 		
@@ -50,19 +49,22 @@ public class Inventory : MonoBehaviour {
 
 	public void CheckInv () {
 		CheckRoom ();
+		Debug.Log ("Number of items in Inventory: " + HeldItems.Count);
 		foreach (Item c in HeldItems)
 			Debug.Log (c);
 	}
 
 	public void AddItem () {
-		HeldItems.Add (ItemsList.Items [0]);
+		int ID;
+		ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
+		HeldItems.Add (ItemsList.Items [ID]);
 		Mass = Mass + ResourceMas;
 		Volume = Volume + ResourceVol;
 		CheckInv ();
 	}
 
 	void RemoveItem () {
-		Debug.Log ("Number of items in Inventory: " + HeldItems.Count);
+		
 
 		
 	}
