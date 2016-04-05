@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 
+
 	public void CheckLift () {
 		CheckRoom ();
 		GetMV ();
@@ -50,11 +51,11 @@ public class Inventory : MonoBehaviour {
 	public void CheckInv () {
 		CheckRoom ();
 		foreach (Item c in HeldItems)
-			Debug.Log ("Name: " + "'" + c.Name + "'" + " Volume: " + c.Volume + " Mass: " + c.Mass);
+			Debug.Log (c);
 	}
 
 	public void AddItem () {
-		HeldItems.Add (new Item { Name = ResourceName, Volume = ResourceVol, Mass = ResourceMas});
+		HeldItems.Add (ItemsList.Items [0]);
 		Mass = Mass + ResourceMas;
 		Volume = Volume + ResourceVol;
 		CheckInv ();
