@@ -18,13 +18,24 @@ public class Inventory : MonoBehaviour {
 	string ResourceName;
 
 	//Inventorys
-	public List<Item> HeldItems = new List<Item> ();
+	List<Item> HeldItems = new List<Item> ();
 
 	void start(){
 		
 	}
 
-
+	void Update (){
+		if(Input.GetKeyDown("f")){
+			foreach (Item c in HeldItems)
+				Debug.Log (gameObject.name + " " +c);
+		}
+		if(Input.GetKeyDown("w")){
+			Debug.Log (gameObject.name +" "+ HeldItems.Find(x => x.Name.Contains("Stone")));
+		}
+		if(Input.GetKeyDown("s")){
+			RemoveItem ();
+		}
+	}
 
 	public void CheckLift () {
 		CheckRoom ();
@@ -64,8 +75,9 @@ public class Inventory : MonoBehaviour {
 	}
 
 	void RemoveItem () {
-		
-
+		int ID = 1;
+		Debug.Log ("Removed Item");
+		HeldItems.Remove(new Item{Name = "Stone"});
 		
 	}
 
