@@ -22,8 +22,10 @@ public class Test : MonoBehaviour {
 				Debug.Log (c);
 		}
 		if(Input.GetKeyDown("e")){
-			Debug.Log ("Contains(\"Name = Test\"): " + ItemsList.Items.Contains(new Item {Name = "Test"}));
-				
+			Debug.Log ("Contains(\"Name = Stone\"): " + ItemsList.Items.Contains(new Item {Name = "Stone"}));
+			Debug.Log ("" + ItemsList.Items.Find(x => x.Name.Contains("Stone")));
+
+
 		}
 
 	}
