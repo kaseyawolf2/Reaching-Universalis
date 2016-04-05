@@ -12,10 +12,14 @@ public class Inventory : MonoBehaviour {
 	public float MaxMass;
 	public float AvlMass;
 	public bool CanHold;
-
+	//Resource Statements
 	int ResourceVol;
 	int ResourceMas;
 	string ResourceName;
+	//Item Addtion/Removeal
+	string Name = Stone;
+	int ID;
+
 
 	//Inventorys
 	List<Item> HeldItems = new List<Item> ();
@@ -66,7 +70,6 @@ public class Inventory : MonoBehaviour {
 	}
 
 	public void AddItem () {
-		int ID;
 		ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
 		HeldItems.Add (ItemsList.Items [ID]);
 		Mass = Mass + ResourceMas;
@@ -75,9 +78,8 @@ public class Inventory : MonoBehaviour {
 	}
 
 	void RemoveItem () {
-		int ID = 1;
 		Debug.Log ("Removed Item");
-		HeldItems.Remove(new Item{Name = "Stone"});
+		HeldItems.Remove(new Item{Name = Name});
 		
 	}
 
