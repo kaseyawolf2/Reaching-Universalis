@@ -19,11 +19,11 @@ public class Test : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown("r")){
 			foreach (Item c in ItemsList.Items)
-				Debug.Log (c);
+				Debug.Log ("Master " + c);
 		}
 		if(Input.GetKeyDown("e")){
 			Debug.Log ("Contains(\"Name = Stone\"): " + ItemsList.Items.Contains(new Item {Name = "Stone"}));
-			Debug.Log ("" + ItemsList.Items.Find(x => x.Name.Contains("Stone")));
+			Debug.Log (" " + ItemsList.Items.Find(x => x.Name.Contains("Stone")));
 
 
 		}
