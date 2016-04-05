@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour {
 	int ResourceMas;
 	string ResourceName;
 	//Item Addtion/Removeal
-	string Name = Stone;
+	string Name = "Stone";
 	int ID;
 
 
