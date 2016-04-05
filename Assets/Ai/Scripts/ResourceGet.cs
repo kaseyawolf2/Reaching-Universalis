@@ -12,13 +12,14 @@ public class ResourceGet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GrabResources ();
-		GrabResources ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown ("q")) {
+			GrabResources ();
+		}
 	}
 
 	public void GrabResources () {
@@ -29,7 +30,9 @@ public class ResourceGet : MonoBehaviour {
 			if (gameObject.GetComponent<Inventory> ().CanHold == true) {
 				Debug.Log ("Can Hold the " + Resourcetype);
 				TargetNode.GetComponent<ResourceNode> ().ResourceAmt = (TargetNode.GetComponent<ResourceNode> ().ResourceAmt - 1);
-				gameObject.GetComponent<Inventory>().AddItem ();
+				gameObject.GetComponent<Inventory> ().AddItem ();
+			} else {
+				Debug.Log ("Cant Hold The " + Resourcetype);
 			}
 		}
 		GetNodeInfo ();
