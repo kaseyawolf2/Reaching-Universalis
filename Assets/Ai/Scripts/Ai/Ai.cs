@@ -8,10 +8,23 @@ public class Ai : MonoBehaviour {
 	public float PlayerDistance;
 	public Vector3 other;
 
+	//movement
+	public Transform Goal;
+	public float Distance;
+	public float Speed = 1;
+
+	//Teleportation
+	float WaitTime;
+
 
 	void Start(){
 		InvokeRepeating("DistCheck", 10, 10);
+		TeleportStart ();
 	}
+	void Update(){
+		
+	}
+
 	void DistCheck(){ 
 		other = Player.position;
 		PlayerDistance = Vector3.Distance(other, transform.position);
@@ -20,48 +33,55 @@ public class Ai : MonoBehaviour {
 
 	void Check(){
 		if (PlayerDistance <= 10){
-			CloseAi ();
-			if (AiLevel != 1){
-				ChangeAiLevel ();
-			}
+			AiLevel = 1;
 		}
 		if (PlayerDistance > 10 && PlayerDistance < 15 ){
-			MidAi ();
-			if (AiLevel != 2){
-				ChangeAiLevel ();
-			}
-
+			AiLevel = 2;
 		}
 		if (PlayerDistance >= 15 ){
-			FarAi ();
-			if (AiLevel != 3){
-				ChangeAiLevel ();
-			}
+			AiLevel = 3;
 		}
 	}
-
-	void ChangeAiLevel(){
 		
+	void ai(){
+
+		if(AiLevel != 3){
+			if(AiLevel == 1){
+				Movement ();
+			}
+
+
+		}
+
+
 	}
 
 
-	void CloseAi(){
-		Debug.Log ("Invoked the Close Ai");
-		AiLevel = 1;
-	}
-	void MidAi(){
-		Debug.Log ("Invoked the Mid Ai");
-		AiLevel = 2;
-	}
-	void FarAi(){
-		Debug.Log ("Invoked the Far Ai");
-		AiLevel = 3;
+
+
+
+//Movement
+	void Movement(){
+	
 	}
 
+	void TeleportStart(){
+		Debug.Log ("Started Teleport");
+		Distance = Vector3.Distance(Goal.position,gameObject.transform.position);
+		WaitTime = Distance / Speed;
+		Debug.Log ("Wait Time = " + WaitTime);
+		StartCoroutine(TeleportWait ());
 
-
-
-
+	}
+	IEnumerator TeleportWait(){
+		Debug.Log ("Started Teleport Wait");
+		yield return new WaitForSeconds(WaitTime);
+		Teleport ();
+	}
+	void Teleport(){
+		Debug.Log ("Teleported");
+		gameObject.transform.position = Goal.position;
+	}
 
 
 
