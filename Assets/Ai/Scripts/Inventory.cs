@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 	
-	//Initial Statements
+	#region Initial Statements
 	public float Volume;
 	public float MaxVolume;
 	public float AvlVolume;
@@ -19,11 +19,9 @@ public class Inventory : MonoBehaviour {
 	//Item Addtion/Removeal
 	string Name = "Stone";
 	int ID;
-
-
 	//Inventorys
 	List<Item> HeldItems = new List<Item> ();
-
+	#endregion
 	void start(){
 		
 	}
@@ -41,6 +39,15 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
+
+	#region Checking
+
+	public void Check(){
+		CheckLift ();
+		CheckMass ();
+		CheckVolume ();
+	}
+
 	public void CheckLift () {
 		CheckRoom ();
 		GetMV ();
@@ -51,15 +58,22 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	void GetMV () {
-		ResourceVol = gameObject.GetComponent<ResourceGet> ().ResourceVol;
-		ResourceMas = gameObject.GetComponent<ResourceGet> ().ResourceMas;
-		ResourceName = gameObject.GetComponent<ResourceGet> ().Resourcetype;
-	}
-
 	void CheckRoom () {
 		AvlMass = MaxMass - Mass;
 		AvlVolume = MaxVolume - Volume;
+	}
+
+	void CheckMass(){
+		Mass = 0;
+		foreach(Item c in HeldItems){
+			Mass += c.Mass;
+		}
+	}
+	void CheckVolume(){
+		Volume = 0;
+		foreach(Item c in HeldItems){
+			Volume += c.Volume;
+		}
 	}
 
 	public void CheckInv () {
@@ -69,17 +83,25 @@ public class Inventory : MonoBehaviour {
 			Debug.Log (c);
 	}
 
+	#endregion
+
+	void GetMV () {
+		ResourceVol = gameObject.GetComponent<ResourceGet> ().ResourceVol;
+		ResourceMas = gameObject.GetComponent<ResourceGet> ().ResourceMas;
+		ResourceName = gameObject.GetComponent<ResourceGet> ().Resourcetype;
+	}
+
+
 	public void AddItem () {
 		ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
 		HeldItems.Add (ItemsList.Items [ID]);
-		Mass = Mass + ResourceMas;
-		Volume = Volume + ResourceVol;
-		CheckInv ();
+		Check ();
 	}
 
 	void RemoveItem () {
 		Debug.Log ("Removed Item");
 		HeldItems.Remove(new Item{Name = Name});
+		Check ();
 		
 	}
 
