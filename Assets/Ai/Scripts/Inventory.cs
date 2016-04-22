@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour {
 	//Inventorys
 	List<Item> HeldItems = new List<Item> ();
 	#endregion
+	
 	void start(){
 		
 	}
@@ -93,12 +94,14 @@ public class Inventory : MonoBehaviour {
 
 
 	public void AddItem () {
+		//not finished Does not have a way to find the ID that you want
 		ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
 		HeldItems.Add (ItemsList.Items [ID]);
 		Check ();
 	}
 
 	void RemoveItem () {
+		//not finished
 		Debug.Log ("Removed Item");
 		HeldItems.Remove(new Item{Name = Name});
 		Check ();
