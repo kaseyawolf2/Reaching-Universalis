@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour {
 	string Name = "Stone";
 	int ID;
 	//Inventorys
-	List<Item> HeldItems = new List<Item> ();
+	public List<Item> HeldItems = new List<Item> ();
 	#endregion
 	
 	void start(){
