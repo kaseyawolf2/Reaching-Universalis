@@ -7,6 +7,9 @@ public class Inventory_GUI : MonoBehaviour {
 	float FontHeight = 20;
 	//List Formating
 	float ListOffset;
+	int MaxNumEntrys;
+	public int PageNum = 1;
+	public int MaxPage;
 	//List Declaerations
 	List<Item> HeldItem;
 	//Inventory Toggle
@@ -15,6 +18,7 @@ public class Inventory_GUI : MonoBehaviour {
 
 	void Start(){
 		GetLists ();
+		MaxNumEntrys =  (int) ((((Screen.height / 1.5f) - InventoryBevel * 2) / FontHeight)-5);
 	}
 
 	void Update(){
@@ -41,9 +45,20 @@ public class Inventory_GUI : MonoBehaviour {
 		//Page Up/Down Arrows
 			//Player
 				//Up
-				GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + InventoryBevel * 3, 25, 25),"^");
+			if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + InventoryBevel * 3, 25, 25),"^")){
+				MaxPage = HeldItem.Count / MaxNumEntrys;
+				if (PageNum > 0 ) {
+					PageNum -= 1;
+				}
+			}
 				//Down
-				GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, ((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6, 25, 25),"v");
+			if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, ((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6, 25, 25),"v")){
+				
+				MaxPage = HeldItem.Count / MaxNumEntrys;
+				if(PageNum < MaxPage){
+					PageNum += 1;
+				}
+			}
 			//Target
 				//Up
 				GUI.Button (new Rect ((Screen.width / 2)+(Screen.width / 3) - InventoryBevel*8, (Screen.height / 6) + InventoryBevel * 3, 25, 25),"^");
@@ -61,27 +76,17 @@ public class Inventory_GUI : MonoBehaviour {
 				int Count = 0;
 				//For each item display a line
 				foreach (Item C in HeldItem) {
-					if (Count < (((Screen.height / 1.5f) - InventoryBevel * 2) / FontHeight)-5) {
+				if (Count - ((1+MaxNumEntrys)*PageNum) <= MaxNumEntrys) {
+					if( (((Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2)-((PageNum*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2)+((PageNum*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
 						//Display Items
-						GUI.Label (new Rect ((Screen.width / 6) + InventoryBevel * 2, (Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2, (Screen.width / 3) - InventoryBevel * 2, FontHeight), Count +" "  + C.ToString ());
-						//Transfer Arrows
-					GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2, FontHeight, FontHeight), ">");
-					} else {
-						Debug.Log("Cant Display any more");
+						GUI.Label (new Rect ((Screen.width / 6) + InventoryBevel * 2, (Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2 - ((PageNum*(MaxNumEntrys+1))*FontHeight), (Screen.width / 3) - InventoryBevel * 2, FontHeight), Count +" "  + C.ToString ());
+						//Transfer Arrows Dont Do anything
+						GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2 - ((PageNum*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), ">");
 					}
-					//add one to the count so we know how much to displace the GUI.Label
-					Count += 1;
 				}
-
-				
+				//add one to the count so we know how much to displace the GUI.Label and know when to stop
+				Count += 1;
+			}
 		}
 	}
-
-
-
-
-
-
-
-
 }
