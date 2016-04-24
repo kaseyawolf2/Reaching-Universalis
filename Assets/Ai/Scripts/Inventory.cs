@@ -18,7 +18,6 @@ public class Inventory : MonoBehaviour {
 	string ResourceName;
 	//Item Addtion/Removeal
 	string Name = "Stone";
-	int ID;
 	//Inventorys
 	public List<Item> HeldItems = new List<Item> ();
 	#endregion
@@ -36,7 +35,7 @@ public class Inventory : MonoBehaviour {
 			Debug.Log (gameObject.name +" "+ HeldItems.Find(x => x.Name.Contains("Stone")));
 		}
 		if(Input.GetKeyDown("s")){
-			RemoveItem ();
+			RemoveItem (0);
 		}
 	}
 
@@ -95,15 +94,15 @@ public class Inventory : MonoBehaviour {
 
 	public void AddItem () {
 		//not finished Does not have a way to find the ID that you want
-		ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
+		int ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
 		HeldItems.Add (ItemsList.Items [ID]);
 		Check ();
 	}
 
-	void RemoveItem () {
+	public void RemoveItem (int ID) {
 		//not finished
 		Debug.Log ("Removed Item");
-		HeldItems.Remove(new Item{Name = Name});
+		HeldItems.Remove(HeldItems[ID]);
 		Check ();
 		
 	}
