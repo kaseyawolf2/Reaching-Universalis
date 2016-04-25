@@ -17,11 +17,17 @@ public class Inventory_GUI : MonoBehaviour {
 	List<Item> TarItem;
 	//Inventory Toggle
 	bool InvTog = false;
+	//Target
+	GameObject Target;
+
 
 
 	void Start(){
-		GetLists ();
+		
 		MaxNumEntrys =  (int) ((((Screen.height / 1.5f) - InventoryBevel * 2) / FontHeight)-5);
+		Target = gameObject.GetComponent<Inventory> ().TarObj;
+
+		GetLists ();
 	}
 
 	void Update(){
@@ -34,22 +40,18 @@ public class Inventory_GUI : MonoBehaviour {
 
 	void GetLists(){
 		PlrItem = gameObject.GetComponent<Inventory>().HeldItems;
-		TarItem = ItemsList.Items;
-	}
-	void UpdateLists(){
-		gameObject.GetComponent<Inventory> ().HeldItems = PlrItem;
-
+		TarItem = Target.GetComponent<Inventory> ().HeldItems;
 	}
 
 	void OnGUI(){
 	if (InvTog == true){
 		//Background for inventory
 			//Center Background Block
-			GUI.Box(new Rect(Screen.width/6,(Screen.height/6)-FontHeight,Screen.width/1.5f,(Screen.height/1.5f)+FontHeight),"Center");
+			GUI.Box(new Rect(Screen.width/6,(Screen.height/6)-FontHeight,Screen.width/1.5f,(Screen.height/1.5f)+FontHeight),"Inventory");
 			//Left Background Box aka Player Items
-			GUI.Box (new Rect ((Screen.width / 6) + InventoryBevel, (Screen.height / 6) + InventoryBevel, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Left");
+			GUI.Box (new Rect ((Screen.width / 6) + InventoryBevel, (Screen.height / 6) + InventoryBevel, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Player Inventory");
 			//Right Background Box Aka Target's Items
-			GUI.Box (new Rect ((Screen.width / 2) + InventoryBevel, (Screen.height / 6) + InventoryBevel, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Right");
+			GUI.Box (new Rect ((Screen.width / 2) + InventoryBevel, (Screen.height / 6) + InventoryBevel, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), Target.name + " Inventory");
 		
 		//Page Up/Down Arrows
 			//Player
@@ -93,14 +95,18 @@ public class Inventory_GUI : MonoBehaviour {
 					if( (((Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2)-((PageNumPlr*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2)+((PageNumPlr*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
 						//Display Items
 						GUI.Label (new Rect ((Screen.width / 6) + InventoryBevel * 2, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), (Screen.width / 3) - InventoryBevel * 2, FontHeight), CountPlr +" "  + Plr.ToString ());
-						//Transfer Arrows Dont Do anything
+						//Transfering Out of PLayers inventory
 						if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), ">")){
 							int HeldID = CountPlr;
 							Item TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];
-							gameObject.GetComponent<Inventory> ().RemoveItem (HeldID);
-							TarItem.Add (TarID);
-
-
+							//Send Request to Check inventory
+							Target.GetComponent<Inventory> ().Check (TarID.ItemID);
+							//Check if it can hold the item
+							if(Target.GetComponent<Inventory>().CanHold){
+								gameObject.GetComponent<Inventory> ().RemoveItem (HeldID);
+								Target.GetComponent<Inventory>().HeldItems.Add (TarID);
+								GetLists ();
+							}
 						}
 					}
 				}
@@ -114,18 +120,28 @@ public class Inventory_GUI : MonoBehaviour {
 					if( (((Screen.height / 6) + (FontHeight * (CountTar+2)) + InventoryBevel * 2)-((PageNumTar*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (CountTar+2)) + InventoryBevel * 2)+((PageNumTar*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
 						//Display Items
 						GUI.Label (new Rect ((Screen.width / 2) + InventoryBevel * 4 + 25, (Screen.height / 6) + (FontHeight * (CountTar+2)) + InventoryBevel * 2 - ((PageNumTar*(MaxNumEntrys+1))*FontHeight), (Screen.width / 3) - InventoryBevel * 2, FontHeight), CountTar +" "  + Tar.ToString ());
-						//Transfer Arrows Dont Do anything
+						//Transfering out of Target Inventory
 						if(GUI.Button (new Rect ((Screen.width / 2) + InventoryBevel * 4, (Screen.height / 6) + (FontHeight * (CountTar+2)) + InventoryBevel * 2 - ((PageNumTar*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), "<")){
 							int ID = CountTar;
-
-
-
-
+							Item TarID = Target.GetComponent<Inventory> ().HeldItems [ID];
+							gameObject.GetComponent<Inventory> ().Check (TarID.ItemID);
+							//Check if it can hold the item
+							if (gameObject.GetComponent<Inventory> ().CanHold) {
+								Target.GetComponent<Inventory> ().HeldItems.Remove (TarID);
+								gameObject.GetComponent<Inventory> ().HeldItems.Add (TarID);
+								GetLists ();
+							}
 						}
 					}
 				}
 				CountTar += 1;
 			}
+
+			//Player and Target Inventory Stats
+			GUI.Label (new Rect((Screen.width / 6) + InventoryBevel*3, (Screen.height / 6) + InventoryBevel + FontHeight, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Avl Mass: " + gameObject.GetComponent<Inventory>().AvlMass + " Avl Volume: " + gameObject.GetComponent<Inventory>().AvlVolume + " Max Mass: " + gameObject.GetComponent<Inventory>().MaxMass + " Max Volume: " + gameObject.GetComponent<Inventory>().MaxVolume);
+
+
+
 		}
 	}
 }

@@ -5,21 +5,24 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
 	
 	#region Initial Statements
-	public float Volume;
+	public float VolumeHeld;
 	public float MaxVolume;
 	public float AvlVolume;
-	public float Mass;
+	public float MassHeld;
 	public float MaxMass;
 	public float AvlMass;
 	public bool CanHold;
 	//Resource Statements
-	int ResourceVol;
-	int ResourceMas;
+	float ResourceVol;
+	float ResourceMas;
 	string ResourceName;
 	//Item Addtion/Removeal
 	string Name = "Stone";
 	//Inventorys
 	public List<Item> HeldItems = new List<Item> ();
+	//Target
+	public GameObject TarObj;
+
 	#endregion
 	
 	void start(){
@@ -27,22 +30,15 @@ public class Inventory : MonoBehaviour {
 	}
 
 	void Update (){
-		if(Input.GetKeyDown("f")){
-			foreach (Item c in HeldItems)
-				Debug.Log (gameObject.name + " " +c);
-		}
-		if(Input.GetKeyDown("w")){
-			Debug.Log (gameObject.name +" "+ HeldItems.Find(x => x.Name.Contains("Stone")));
-		}
-		if(Input.GetKeyDown("s")){
-			RemoveItem (0);
-		}
 	}
 
 
 	#region Checking
 
-	public void Check(){
+	public void Check(int ID){
+		ResourceVol = ItemsList.Items[ID].Volume;
+		ResourceMas = ItemsList.Items[ID].Mass;
+		ResourceName = ItemsList.Items[ID].Name;
 		CheckLift ();
 		CheckMass ();
 		CheckVolume ();
@@ -50,7 +46,6 @@ public class Inventory : MonoBehaviour {
 
 	public void CheckLift () {
 		CheckRoom ();
-		GetMV ();
 		if (AvlMass < ResourceMas || AvlVolume < ResourceVol) {
 			CanHold = false;
 		} else {
@@ -59,20 +54,20 @@ public class Inventory : MonoBehaviour {
 	}
 
 	void CheckRoom () {
-		AvlMass = MaxMass - Mass;
-		AvlVolume = MaxVolume - Volume;
+		AvlMass = MaxMass - MassHeld;
+		AvlVolume = MaxVolume - VolumeHeld;
 	}
 
 	void CheckMass(){
-		Mass = 0;
+		MassHeld = 0;
 		foreach(Item c in HeldItems){
-			Mass += c.Mass;
+			MassHeld += c.Mass;
 		}
 	}
 	void CheckVolume(){
-		Volume = 0;
+		VolumeHeld = 0;
 		foreach(Item c in HeldItems){
-			Volume += c.Volume;
+			VolumeHeld += c.Volume;
 		}
 	}
 
@@ -85,25 +80,16 @@ public class Inventory : MonoBehaviour {
 
 	#endregion
 
-	void GetMV () {
-		ResourceVol = gameObject.GetComponent<ResourceGet> ().ResourceVol;
-		ResourceMas = gameObject.GetComponent<ResourceGet> ().ResourceMas;
-		ResourceName = gameObject.GetComponent<ResourceGet> ().Resourcetype;
-	}
-
-
-	public void AddItem () {
-		//not finished Does not have a way to find the ID that you want
-		int ID = ItemsList.Items.Find (x => x.Name.Contains (ResourceName)).ItemID;
+	public void AddItem (int ID) {
 		HeldItems.Add (ItemsList.Items [ID]);
-		Check ();
+		Check (ID);
 	}
 
 	public void RemoveItem (int ID) {
 		//not finished
 		Debug.Log ("Removed Item");
 		HeldItems.Remove(HeldItems[ID]);
-		Check ();
+		Check (ID);
 		
 	}
 
