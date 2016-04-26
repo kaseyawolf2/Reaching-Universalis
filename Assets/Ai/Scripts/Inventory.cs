@@ -58,13 +58,13 @@ public class Inventory : MonoBehaviour {
 		AvlVolume = MaxVolume - VolumeHeld;
 	}
 
-	void CheckMass(){
+	public void CheckMass(){
 		MassHeld = 0;
 		foreach(Item c in HeldItems){
 			MassHeld += c.Mass;
 		}
 	}
-	void CheckVolume(){
+	public void CheckVolume(){
 		VolumeHeld = 0;
 		foreach(Item c in HeldItems){
 			VolumeHeld += c.Volume;
