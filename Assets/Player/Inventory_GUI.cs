@@ -19,7 +19,17 @@ public class Inventory_GUI : MonoBehaviour {
 	bool InvTog = false;
 	//Target
 	GameObject Target;
-
+	//Inventory info
+	//Player
+	float AvlMassPlr;
+	float AvlVolPlr;
+	float MaxMassPlr;
+	float MaxVolPlr;
+	//Target
+	float AvlMassTar;
+	float AvlVolTar;
+	float MaxMassTar;
+	float MaxVolTar;
 
 
 	void Start(){
@@ -36,7 +46,25 @@ public class Inventory_GUI : MonoBehaviour {
 			Statics.ShowMouse = !Statics.ShowMouse;
 		}
 	}
+		
+	void UpdateInvInfo(){
+		
+		gameObject.GetComponent<Inventory> ().CheckMass ();
+		gameObject.GetComponent<Inventory> ().CheckVolume ();
 
+		AvlMassPlr = gameObject.GetComponent<Inventory> ().AvlMass;
+		AvlVolPlr = gameObject.GetComponent<Inventory> ().AvlVolume;
+		MaxMassPlr = gameObject.GetComponent<Inventory> ().MaxMass;
+		MaxVolPlr = gameObject.GetComponent<Inventory> ().MaxVolume;
+
+		gameObject.GetComponent<Inventory> ().CheckMass ();
+		gameObject.GetComponent<Inventory> ().CheckVolume ();
+
+		AvlMassTar = gameObject.GetComponent<Inventory> ().AvlMass;
+		AvlVolTar = gameObject.GetComponent<Inventory> ().AvlVolume;
+		MaxMassTar = gameObject.GetComponent<Inventory> ().MaxMass;
+		MaxVolTar = gameObject.GetComponent<Inventory> ().MaxVolume;
+	}
 
 	void GetLists(){
 		PlrItem = gameObject.GetComponent<Inventory>().HeldItems;
@@ -106,6 +134,7 @@ public class Inventory_GUI : MonoBehaviour {
 								gameObject.GetComponent<Inventory> ().RemoveItem (HeldID);
 								Target.GetComponent<Inventory>().HeldItems.Add (TarID);
 								GetLists ();
+								UpdateInvInfo ();
 							}
 						}
 					}
@@ -130,6 +159,7 @@ public class Inventory_GUI : MonoBehaviour {
 								Target.GetComponent<Inventory> ().HeldItems.Remove (TarID);
 								gameObject.GetComponent<Inventory> ().HeldItems.Add (TarID);
 								GetLists ();
+								UpdateInvInfo ();
 							}
 						}
 					}
@@ -137,10 +167,10 @@ public class Inventory_GUI : MonoBehaviour {
 				CountTar += 1;
 			}
 
-			//Player and Target Inventory Stats
-			GUI.Label (new Rect((Screen.width / 6) + InventoryBevel*3, (Screen.height / 6) + InventoryBevel + FontHeight, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Avl Mass: " + gameObject.GetComponent<Inventory>().AvlMass + " Avl Volume: " + gameObject.GetComponent<Inventory>().AvlVolume + " Max Mass: " + gameObject.GetComponent<Inventory>().MaxMass + " Max Volume: " + gameObject.GetComponent<Inventory>().MaxVolume);
-
-
+			//Player Inventory Stats
+			GUI.Label (new Rect((Screen.width / 6) + InventoryBevel*3, (Screen.height / 6) + InventoryBevel + FontHeight, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Avl Mass: " + AvlMassPlr + " Avl Volume: " +AvlVolPlr + " Max Mass: " + MaxMassPlr + " Max Volume: " + MaxVolPlr);
+			//Target Inventory Stats
+			GUI.Label (new Rect((Screen.width / 6) + InventoryBevel*3, (Screen.height / 6) + InventoryBevel + FontHeight, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Avl Mass: " + AvlMassTar + " Avl Volume: " +AvlVolTar + " Max Mass: " + MaxMassTar + " Max Volume: " + MaxVolTar);
 
 		}
 	}
