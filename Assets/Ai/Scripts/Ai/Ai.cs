@@ -20,7 +20,6 @@ public class Ai : MonoBehaviour {
 	void Start(){
 		Player = GameObject.FindGameObjectWithTag ("Player").transform;
 		InvokeRepeating("DistCheck", 10, 10);
-		TeleportStart ();
 	}
 	void Update(){
 		
