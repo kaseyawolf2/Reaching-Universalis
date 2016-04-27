@@ -63,12 +63,14 @@ public class Inventory : MonoBehaviour {
 		foreach(Item c in HeldItems){
 			MassHeld += c.Mass;
 		}
+		CheckRoom ();
 	}
 	public void CheckVolume(){
 		VolumeHeld = 0;
 		foreach(Item c in HeldItems){
 			VolumeHeld += c.Volume;
 		}
+		CheckRoom ();
 	}
 
 	public void CheckInv () {
@@ -81,13 +83,11 @@ public class Inventory : MonoBehaviour {
 	#endregion
 
 	public void AddItem (int ID) {
-		HeldItems.Add (ItemsList.Items [ID]);
+		HeldItems.Add(ItemsList.Items [ID]);
 		Check (ID);
 	}
 
 	public void RemoveItem (int ID) {
-		//not finished
-		Debug.Log ("Removed Item");
 		HeldItems.Remove(HeldItems[ID]);
 		Check (ID);
 		

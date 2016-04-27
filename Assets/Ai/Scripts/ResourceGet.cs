@@ -13,9 +13,12 @@ public class ResourceGet : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown ("q")) {
-			GrabResources ();
+	void LateUpdate () {
+		if (Input.GetButtonDown("Harvest")) {
+			TargetNode = gameObject.GetComponent<Inventory>().TarObj;
+			if (TargetNode != null && TargetNode.GetComponent <ResourceNode> ()) {
+				GrabResources ();
+			}
 		}
 	}
 
@@ -38,6 +41,5 @@ public class ResourceGet : MonoBehaviour {
 
 	void GetNodeInfo () {
 		ResourceAmount = TargetNode.GetComponent<ResourceNode> ().ResourceAmt;
-
 	}
 }
