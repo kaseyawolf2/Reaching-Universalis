@@ -29,11 +29,11 @@ public class ResourceGet : MonoBehaviour {
 			Debug.Log ("It has Resources");
 			gameObject.GetComponent<Inventory> ().Check (ItemID);
 			if (gameObject.GetComponent<Inventory> ().CanHold == true) {
-				Debug.Log ("Can Hold the " + ItemsList.Items[ItemID].Name);
+				Debug.Log ("Can Hold the " + Statics.Items[ItemID].Name);
 				TargetNode.GetComponent<ResourceNode> ().ResourceAmt = (TargetNode.GetComponent<ResourceNode> ().ResourceAmt - 1);
 				gameObject.GetComponent<Inventory> ().AddItem (ItemID);
 			} else {
-				Debug.Log ("Cant Hold The " + ItemsList.Items[ItemID].Name);
+				Debug.Log ("Cant Hold The " + Statics.Items[ItemID].Name);
 			}
 		}
 		GetNodeInfo ();

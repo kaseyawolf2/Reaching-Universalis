@@ -4,6 +4,9 @@ using System.Collections;
 public class Ai : MonoBehaviour {
 	public int AiLevel;
 
+	//Personality
+	public string CharName;
+
 	public Transform Player;
 	public float PlayerDistance;
 	public Vector3 other;
@@ -17,7 +20,27 @@ public class Ai : MonoBehaviour {
 	float WaitTime;
 
 
+
+
+
+	void RandomizeName(){
+		string FirstStr;
+		string LastStr;
+		int FirstNum;
+		int LastNum;
+		FirstNum = Random.Range (0, Statics.FirstNamesMale.Count - 1);
+		LastNum = Random.Range (0, Statics.LastNamesMale.Count - 1);
+		FirstStr = Statics.FirstNamesMale[FirstNum].Name;
+		LastStr = Statics.LastNamesMale[LastNum].Name;
+		CharName = FirstStr + " " + LastStr;
+	}
+
+
+
+
 	void Start(){
+		RandomizeName();
+		name = CharName;
 		Player = GameObject.FindGameObjectWithTag ("Player").transform;
 		InvokeRepeating("DistCheck", 10, 10);
 	}

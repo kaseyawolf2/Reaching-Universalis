@@ -14,8 +14,8 @@ public class Inventory_GUI : MonoBehaviour {
 	int MaxPagePlr;
 	int MaxPageTar;
 	//List Declaerations
-	List<Item> PlrItem;
-	List<Item> TarItem;
+	List<ItemList> PlrItem;
+	List<ItemList> TarItem;
 	//Inventory Toggle
 	bool InvTog = false;
 	//Target
@@ -129,7 +129,7 @@ public class Inventory_GUI : MonoBehaviour {
 					//Keep Count
 					int CountPlr = 0;
 					//For each item display a line
-					foreach (Item Plr in PlrItem) {
+					foreach (ItemList Plr in PlrItem) {
 					if (CountPlr - ((1+MaxNumEntrys)*PageNumPlr) <= MaxNumEntrys) {
 						if( (((Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2)-((PageNumPlr*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2)+((PageNumPlr*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
 							//Display Items
@@ -138,7 +138,7 @@ public class Inventory_GUI : MonoBehaviour {
 							if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), ">")){
 								UpdateInvInfo ();
 								int HeldID = CountPlr;
-								Item TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];
+								ItemList TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];
 								//Send Request to Check inventory
 								Target.GetComponent<Inventory> ().Check (TarID.ItemID);
 								//Check if it can hold the item
@@ -158,7 +158,7 @@ public class Inventory_GUI : MonoBehaviour {
 					#region Target Items
 				int CountTar = 0;
 			if (Target != null && Target.GetComponent<Inventory> () != null) {
-				foreach (Item Tar in TarItem) {
+				foreach (ItemList Tar in TarItem) {
 					if (CountTar - ((1 + MaxNumEntrys) * PageNumTar) <= MaxNumEntrys) {
 						if ((((Screen.height / 6) + (FontHeight * (CountTar + 2)) + InventoryBevel * 2) - ((PageNumTar * (MaxNumEntrys + 1)) * FontHeight) - 25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (CountTar + 2)) + InventoryBevel * 2) + ((PageNumTar * (MaxNumEntrys + 1)) * FontHeight) < (((Screen.height / 1.5f) - InventoryBevel * 2) + (Screen.height / 6) - InventoryBevel * 6 - FontHeight * 1))) {
 							//Display Items
@@ -167,7 +167,7 @@ public class Inventory_GUI : MonoBehaviour {
 							if (GUI.Button (new Rect ((Screen.width / 2) + InventoryBevel * 4, (Screen.height / 6) + (FontHeight * (CountTar + 2)) + InventoryBevel * 2 - ((PageNumTar * (MaxNumEntrys + 1)) * FontHeight), FontHeight, FontHeight), "<")) {
 								UpdateInvInfo ();
 								int ID = CountTar;
-								Item TarID = Target.GetComponent<Inventory> ().HeldItems [ID];
+								ItemList TarID = Target.GetComponent<Inventory> ().HeldItems [ID];
 								gameObject.GetComponent<Inventory> ().Check (TarID.ItemID);
 								//Check if it can hold the item
 								if (gameObject.GetComponent<Inventory> ().CanHold) {

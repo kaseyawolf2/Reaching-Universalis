@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour {
 	//Item Addtion/Removeal
 	string Name = "Stone";
 	//Inventorys
-	public List<Item> HeldItems = new List<Item> ();
+	public List<ItemList> HeldItems = new List<ItemList> ();
 	//Target
 	public GameObject TarObj;
 
@@ -36,9 +36,9 @@ public class Inventory : MonoBehaviour {
 	#region Checking
 
 	public void Check(int ID){
-		ResourceVol = ItemsList.Items[ID].Volume;
-		ResourceMas = ItemsList.Items[ID].Mass;
-		ResourceName = ItemsList.Items[ID].Name;
+		ResourceVol = Statics.Items[ID].Volume;
+		ResourceMas = Statics.Items[ID].Mass;
+		ResourceName = Statics.Items[ID].Name;
 		CheckLift ();
 		CheckMass ();
 		CheckVolume ();
@@ -60,14 +60,14 @@ public class Inventory : MonoBehaviour {
 
 	public void CheckMass(){
 		MassHeld = 0;
-		foreach(Item c in HeldItems){
+		foreach(ItemList c in HeldItems){
 			MassHeld += c.Mass;
 		}
 		CheckRoom ();
 	}
 	public void CheckVolume(){
 		VolumeHeld = 0;
-		foreach(Item c in HeldItems){
+		foreach(ItemList c in HeldItems){
 			VolumeHeld += c.Volume;
 		}
 		CheckRoom ();
@@ -76,14 +76,14 @@ public class Inventory : MonoBehaviour {
 	public void CheckInv () {
 		CheckRoom ();
 		Debug.Log ("Number of items in Inventory: " + HeldItems.Count);
-		foreach (Item c in HeldItems)
+		foreach (ItemList c in HeldItems)
 			Debug.Log (c);
 	}
 
 	#endregion
 
 	public void AddItem (int ID) {
-		HeldItems.Add(ItemsList.Items [ID]);
+		HeldItems.Add(Statics.Items [ID]);
 		Check (ID);
 	}
 

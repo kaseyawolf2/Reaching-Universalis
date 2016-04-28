@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class Item : IEquatable<Item> {
+public class ItemList : IEquatable<ItemList> {
 	public int ItemID { get; set; }
 	
 	public string Name { get; set; }
@@ -24,15 +24,14 @@ public class Item : IEquatable<Item> {
 	public override bool Equals(object obj)
 	{
 		if (obj == null) return false;
-		Item objAsPart = obj as Item;
+		ItemList objAsPart = obj as ItemList;
 		if (objAsPart == null) return false;
 		else return Equals(objAsPart);
 	}
 
-	public bool Equals(Item other)
+	public bool Equals(ItemList other)
 	{
 		if (other == null) return false;
 		return (this.Name.Equals(other.Name));
 	}
 }
-
