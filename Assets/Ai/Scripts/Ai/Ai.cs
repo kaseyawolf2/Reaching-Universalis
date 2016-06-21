@@ -28,24 +28,24 @@ public class Ai : MonoBehaviour {
 		string LastStr;
 		int FirstNum;
 		int LastNum;
+
 		FirstNum = Random.Range (0, Statics.FirstNamesMale.Count - 1);
-		LastNum = Random.Range (0, Statics.LastNamesMale.Count - 1);
+		LastNum = Random.Range (0, Statics.LastNames.Count - 1);
 		FirstStr = Statics.FirstNamesMale[FirstNum].Name;
-		LastStr = Statics.LastNamesMale[LastNum].Name;
+		LastStr = Statics.LastNames[LastNum].Name;
 		CharName = FirstStr + " " + LastStr;
 	}
-
 
 
 
 	void Start(){
 		RandomizeName();
 		name = CharName;
-		Player = GameObject.FindGameObjectWithTag ("Player").transform;
+		Player = GameObject.FindGameObjectWithTag("Player").transform;
 		InvokeRepeating("DistCheck", 10, 10);
 	}
+
 	void Update(){
-		
 	}
 
 	void DistCheck(){ 

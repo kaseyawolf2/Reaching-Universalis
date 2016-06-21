@@ -2,10 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Statics : MonoBehaviour {
+public class Statics{
 
 	static public bool ShowMouse = false;
+	static public bool ImportFinished;
+
+
 	static public List<ItemList> Items = new List<ItemList> ();
 	static public List<NameList> FirstNamesMale = new List<NameList> ();
-	static public List<NameList> LastNamesMale = new List<NameList> ();
+	static public List<NameList> FirstNamesFemale = new List<NameList>();
+	static public List<NameList> LastNames = new List<NameList> ();
+
+
 }
