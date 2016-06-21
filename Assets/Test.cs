@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class Test : MonoBehaviour {
 
 	void Awake(){
-		AddFirst ("Bob");
-		AddFirst ("Joe");
+		//AddFirst ("Bob");
+		//AddFirst ("Joe");
 
 
-		AddLast ("Henton");
+		//AddLast ("Henton");
 
 
 
