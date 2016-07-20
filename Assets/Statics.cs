@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public class Statics {
-
+public static class Statics {
+	
 	static public bool ShowMouse = false;
 	static public bool ImportFinished;
 
-	static public int Seed = 142;
+	static public int Seed = 195381;
 
 	static public List<ItemList> Items = new List<ItemList> ();
 	static public List<NameList> FirstNamesMale = new List<NameList> ();

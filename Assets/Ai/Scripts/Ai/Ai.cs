@@ -23,9 +23,16 @@ public class Ai : MonoBehaviour {
 
 	//Node Info
 	GameObject[] NodeList;
-	GameObject TargetNode;
+	public GameObject TargetNode;
 	GameObject TargetStorage;
 
+	public float NodeDistance;
+	GameObject PosNode;
+
+	//Target
+	public string TargetResource = "Stone";
+
+	public int A;
 
 	#endregion
 
@@ -51,6 +58,7 @@ public class Ai : MonoBehaviour {
 		name = CharName;
 		Player = GameObject.FindGameObjectWithTag("Player").transform;
 		//InvokeRepeating("DistCheck", 10, 10);
+		DecisionAI();
 	}
 
 	void Update(){
@@ -76,40 +84,75 @@ public class Ai : MonoBehaviour {
 	#endregion
 	#region Ai
 	void DecisionAI(){
-		
+		MiningAI();
 	}
 
 
 	#region Mining Ai
 	void MiningAI() {
 
-
+		if (TargetNode != null)
+		{
+			print("There is a target Node");
+		}
 		if(TargetNode == null){
+			print("There is no Target Node");
 			ClosestNode();
 		}
 
+		CollectCheck();
 
-
-	
+		DecisionAI();
 	}
 
+
+
+
 	void ClosestNode() {
+		print("Searching For a Node");
 		NodeList = GameObject.FindGameObjectsWithTag("Resource Node");
-		float NodeDistance;
-		GameObject PosNode;
+		NodeDistance = Mathf.Infinity;
 		foreach (var Node in NodeList)
 		{
-			float Distance = Vector3.Distance(Node.transform.position, transform.position);
-			if(Distance < NodeDistance) {
-				PosNode = Node.gameObject;
-				NodeDistance = Distance;
+			print("Node " + A + " - " + Node.GetComponent<ResourceNode>().ResourceType);
+			A = A + 1;
+			float PosDistance = Vector3.Distance(Node.transform.position, transform.position);
+			if (string.Equals(Node.GetComponent<ResourceNode>().ResourceType, TargetResource))
+			{
+				print("Found a Node");
+				if (PosDistance < NodeDistance)
+				{
+					print("Found a Closer Node");
+					PosNode = Node.gameObject;
+					NodeDistance = PosDistance;
+				}
 			}
+		}
+		if(PosNode != null){
+			print("Targeted a Node");
+			TargetNode = PosNode;	
+		}
+	}
+	void CollectCheck() {
+		gameObject.GetComponent<Inventory>().Check(TargetNode.GetComponent<ResourceNode>().ItemID);
+		if (gameObject.GetComponent<Inventory>().CanHold == true)
+		{
+			Collect();
+		}
+	}
+	void Collect() {
+		Goal = TargetNode.transform;
+		UpdateNodeDis();
+		if (NodeDistance > 2)
+		{
+			TeleportStart();
 		}
 	}
 
-
-
-
+	void UpdateNodeDis()
+	{
+		NodeDistance = Vector3.Distance(TargetNode.transform.position, transform.position);
+	}
 
 
 	#endregion
@@ -119,7 +162,9 @@ public class Ai : MonoBehaviour {
 
 	#region Movement
 	void Movement(){
-	
+		if (Goal != null){
+			TeleportStart();
+		}
 	}
 
 	void TeleportStart(){
@@ -137,7 +182,7 @@ public class Ai : MonoBehaviour {
 	}
 	void Teleport(){
 		Debug.Log ("Teleported");
-		gameObject.transform.position = Goal.position;
+		gameObject.transform.position = new Vector3(Goal.position.x+2, Goal.position.y+2, Goal.position.z+2);
 	}
 	#endregion
 

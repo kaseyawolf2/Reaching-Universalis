@@ -40,11 +40,11 @@ public class Inventory : MonoBehaviour {
 		ResourceMas = Statics.Items[ID].Mass;
 		ResourceName = Statics.Items[ID].Name;
 		CheckLift ();
-		CheckMass ();
-		CheckVolume ();
 	}
 
 	public void CheckLift () {
+		CheckMass();
+		CheckVolume();
 		CheckRoom ();
 		if (AvlMass < ResourceMas || AvlVolume < ResourceVol) {
 			CanHold = false;
