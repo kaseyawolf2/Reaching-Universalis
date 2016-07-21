@@ -4,12 +4,25 @@ using System.IO;
 
 
 public class NameReader : MonoBehaviour {
+
+	string dir;
+
 	// paths of the Names
-	string pathFirstMale = @"C:\Users\kasey\Documents\Reaching Universalis\Assets\Names\FirstNamesMale.txt";
-	string pathFirstFemale = @"C:\Users\kasey\Documents\Reaching Universalis\Assets\Names\FirstNamesFemale.txt";
-	string pathLast = @"C:\Users\kasey\Documents\Reaching Universalis\Assets\Names\LastNames.txt";
+	string pathFirstMale;
+	string pathFirstFemale;
+	string pathLast;
 	// Use this for initialization
 	void Start () {
+		dir = System.IO.Path.GetFullPath("Assets");
+
+
+		pathFirstMale = dir + @"\Names\FirstNamesMale.txt";
+		pathFirstFemale =  dir + @"\Names\FirstNamesFemale.txt";
+		pathLast =  dir + @"\Names\LastNames.txt";
+
+		print (pathFirstMale);
+		print (pathFirstFemale);
+		print (pathLast);
 		// so we dont start the game till after the names have be imported
 		Statics.ImportFinished = false;
 		#region Initial Loading

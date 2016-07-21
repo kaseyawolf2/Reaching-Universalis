@@ -44,7 +44,9 @@ public class Ai : MonoBehaviour {
 		int FirstNum;
 		int LastNum;
 		FirstNum = Random.Range (0, Statics.FirstNamesMale.Count - 1);
+		Debug.Log (Statics.FirstNamesMale.Count);
 		LastNum = Random.Range (0, Statics.LastNames.Count - 1);
+		Debug.Log (Statics.LastNames.Count);
 		FirstStr = Statics.FirstNamesMale[FirstNum].Name;
 		LastStr = Statics.LastNames[LastNum].Name;
 		CharName = FirstStr + " " + LastStr;
