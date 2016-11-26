@@ -111,37 +111,33 @@ public class Ai : MonoBehaviour {
         if (SearchStyle == 2) {
             CurrentDistance = -1;
         }
-        GameObject[] IntialList = GameObject.FindGameObjectsWithTag(TagtoFind);
-        GameObject[] FinalList = null;
-        if (IntialList != null)
-        {
-            int Current = 0;
-            int OtherList = 0;
-            foreach (var Item in IntialList) {
-                Current += 1;
-                if (Item.name == ItemNameToFind) {
-                    FinalList[OtherList] = Item;
-                }
-            }
-            foreach (var Item in IntialList)
-            {
-                float Distance = Vector3.Distance(Item.transform.position, gameObject.transform.position);
-                if (SearchStyle == 1) {
-                    if (Distance < CurrentDistance)
+        GameObject[] List = GameObject.FindGameObjectsWithTag(TagtoFind);
+        if (List != null)
+        {                       
+            foreach (var Item in List) {
+                if (Item.name == ItemNameToFind)
+                {
+                    float Distance = Vector3.Distance(Item.transform.position, gameObject.transform.position);
+                    if (SearchStyle == 1)
                     {
-                        CurrentItem = Item.gameObject;
-                        NodeDistance = Distance;
+                        if (Distance < CurrentDistance)
+                        {
+                            CurrentItem = Item.gameObject;
+                            NodeDistance = Distance;
+                        }
                     }
-                }
-                if (SearchStyle == 2) {
-                    if (Distance > CurrentDistance)
+                    if (SearchStyle == 2)
                     {
-                        CurrentItem = Item.gameObject;
-                        NodeDistance = Distance;
+                        if (Distance > CurrentDistance)
+                        {
+                            CurrentItem = Item.gameObject;
+                            NodeDistance = Distance;
+                        }
                     }
                 }
             }
         }
+        print("List Lenght " + List.Length);
         return CurrentItem;
         }
 

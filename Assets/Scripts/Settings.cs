@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class Settings : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
         Random.InitState(Statics.Seed);
 		if (Statics.ImportFinished == false)
 		{
