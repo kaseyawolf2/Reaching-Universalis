@@ -3,6 +3,7 @@
 public static class Statics {
 	
 	static public bool ShowMouse = false;
+    static public bool Debug = false;
 	static public bool ImportFinished;
 
 	static public int Seed = 195381;

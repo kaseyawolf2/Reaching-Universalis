@@ -19,13 +19,17 @@ public class NameReader : MonoBehaviour {
 		pathFirstMale = dir + @"\Names\FirstNamesMale.txt";
 		pathFirstFemale =  dir + @"\Names\FirstNamesFemale.txt";
 		pathLast =  dir + @"\Names\LastNames.txt";
+        if (Statics.Debug)
+        {
+            Debug.Log(pathFirstMale);
+            Debug.Log(pathFirstFemale);
+            Debug.Log(pathLast);
+        }
 
-		print (pathFirstMale);
-		print (pathFirstFemale);
-		print (pathLast);
-		// so we dont start the game till after the names have be imported
-		Statics.ImportFinished = false;
-		#region Initial Loading
+
+        // so we dont start the game till after the names have be imported
+    #region Name Importing
+        Statics.ImportFinished = false;
 		#region Male FirstNames
 		//prevents the folder path being spamed with files if there is no file there
 		if (File.Exists(pathFirstMale)) 
@@ -36,7 +40,12 @@ public class NameReader : MonoBehaviour {
 					Statics.FirstNamesMale.Add (new NameList{ Name = sr.ReadLine () });
 				}
 			}
-		}
+        }
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
 		#endregion
 		#region Female FirstNames
 		if (File.Exists(pathFirstFemale))
@@ -49,9 +58,14 @@ public class NameReader : MonoBehaviour {
 				}
 			}
 		}
-		#endregion
-		#region LastNames
-		if (File.Exists(pathLast))
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
+        #endregion
+        #region LastNames
+        if (File.Exists(pathLast))
 		{
 			using (StreamReader sr = new StreamReader(pathLast))
 			{
@@ -61,16 +75,20 @@ public class NameReader : MonoBehaviour {
 				}
 			}
 		}
-		#endregion
-		#endregion
-		Statics.ImportFinished = true;
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
+        #endregion
+        Statics.ImportFinished = true;
 	}
+    #endregion
 
-
-
-	void OnApplicationQuit()
+    #region Name Saving
+    void OnApplicationQuit()
 	{
-		#region Name Saving
+		
 		#region Male FirstNames
 		if (File.Exists(pathFirstMale))
 		{
@@ -82,9 +100,14 @@ public class NameReader : MonoBehaviour {
 				}
 			}
 		}
-		#endregion
-		#region Female FirstNames
-		if (File.Exists(pathFirstFemale))
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
+        #endregion
+        #region Female FirstNames
+        if (File.Exists(pathFirstFemale))
 		{
 			using (StreamWriter sw = new StreamWriter(pathFirstFemale))
 			{
@@ -94,9 +117,14 @@ public class NameReader : MonoBehaviour {
 				}
 			}
 		}
-		#endregion
-		#region Female LastNames
-		if (File.Exists(pathLast))
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
+        #endregion
+        #region Female LastNames
+        if (File.Exists(pathLast))
 		{
 			using (StreamWriter sw = new StreamWriter(pathLast))
 			{
@@ -106,12 +134,13 @@ public class NameReader : MonoBehaviour {
 				}
 			}
 		}
-		#endregion
-		#endregion
-	}
-
-
-	// Update is called once per frame
-	void Update () {
-	}
+        else
+        {
+            Debug.LogError("No File Path Found");
+            return;
+        }
+        #endregion
+       
+    }
+    #endregion
 }

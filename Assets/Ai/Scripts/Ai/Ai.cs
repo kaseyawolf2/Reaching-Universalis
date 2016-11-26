@@ -37,16 +37,16 @@ public class Ai : MonoBehaviour {
 	#endregion
 
 	#region Name Randomization
-	// just so the Ai have name not perminate
+	// just so the Ai has a name, not going to stay (atleast not in current form)
 	void RandomizeName(){
 		string FirstStr;
 		string LastStr;
 		int FirstNum;
 		int LastNum;
 		FirstNum = Random.Range (0, Statics.FirstNamesMale.Count - 1);
-		Debug.Log (Statics.FirstNamesMale.Count);
+		Debug.Log ("# Of First Names: " + Statics.FirstNamesMale.Count);
 		LastNum = Random.Range (0, Statics.LastNames.Count - 1);
-		Debug.Log (Statics.LastNames.Count);
+		Debug.Log ("# Of Last Names: " + Statics.LastNames.Count);
 		FirstStr = Statics.FirstNamesMale[FirstNum].Name;
 		LastStr = Statics.LastNames[LastNum].Name;
 		CharName = FirstStr + " " + LastStr;
@@ -59,11 +59,15 @@ public class Ai : MonoBehaviour {
 		RandomizeName();
 		name = CharName;
 		Player = GameObject.FindGameObjectWithTag("Player").transform;
-		//InvokeRepeating("DistCheck", 10, 10);
-		DecisionAI();
+        
 	}
-
-	void Update(){
+    int x = 0;
+	void Update() {
+        if (x == 0)
+        {
+            x = 1;
+            print(Find("Resource Node", "Stone").name);
+        }
 	}
 	#region Distance Check
 	void DistCheck(){ 
@@ -86,55 +90,73 @@ public class Ai : MonoBehaviour {
 	#endregion
 	#region Ai
 	void DecisionAI(){
-		MiningAI();
+
 	}
 
+    #region Basic Fuctions
+    GameObject Find(string TagtoFind, string ItemNameToFind, int SearchStyle = 1) {
+        //Search Styles #defaults to 1
+        // 0 - All
+        // 1 - Closest
+        // 2 - Far
+        // 3 - Largest ++ Not Implemted
+        // 4 - Smallest ++ Not Implemted
+        print("SearchStyle " + SearchStyle);
 
-	#region Mining Ai
-	void MiningAI() {
+        GameObject CurrentItem = null;
+        float CurrentDistance = 0;
+        if (SearchStyle == 1) {
+            CurrentDistance = Mathf.Infinity;
+        }
+        if (SearchStyle == 2) {
+            CurrentDistance = -1;
+        }
+        GameObject[] IntialList = GameObject.FindGameObjectsWithTag(TagtoFind);
+        GameObject[] FinalList = null;
+        if (IntialList != null)
+        {
+            int Current = 0;
+            int OtherList = 0;
+            foreach (var Item in IntialList) {
+                Current += 1;
+                if (Item.name == ItemNameToFind) {
+                    FinalList[OtherList] = Item;
+                }
+            }
+            foreach (var Item in IntialList)
+            {
+                float Distance = Vector3.Distance(Item.transform.position, gameObject.transform.position);
+                if (SearchStyle == 1) {
+                    if (Distance < CurrentDistance)
+                    {
+                        CurrentItem = Item.gameObject;
+                        NodeDistance = Distance;
+                    }
+                }
+                if (SearchStyle == 2) {
+                    if (Distance > CurrentDistance)
+                    {
+                        CurrentItem = Item.gameObject;
+                        NodeDistance = Distance;
+                    }
+                }
+            }
+        }
+        return CurrentItem;
+        }
 
-		if (TargetNode != null)
-		{
-			print("There is a target Node");
-		}
-		if(TargetNode == null){
-			print("There is no Target Node");
-			ClosestNode();
-		}
+    void Get(GameObject Item) { 
 
-		CollectCheck();
+    }
+    void MoveTo() { 
 
-		DecisionAI();
-	}
+    }
+    void Use() { 
+
+    }
+    #endregion
 
 
-
-
-	void ClosestNode() {
-		print("Searching For a Node");
-		NodeList = GameObject.FindGameObjectsWithTag("Resource Node");
-		NodeDistance = Mathf.Infinity;
-		foreach (var Node in NodeList)
-		{
-			print("Node " + A + " - " + Node.GetComponent<ResourceNode>().ResourceType);
-			A = A + 1;
-			float PosDistance = Vector3.Distance(Node.transform.position, transform.position);
-			if (string.Equals(Node.GetComponent<ResourceNode>().ResourceType, TargetResource))
-			{
-				print("Found a Node");
-				if (PosDistance < NodeDistance)
-				{
-					print("Found a Closer Node");
-					PosNode = Node.gameObject;
-					NodeDistance = PosDistance;
-				}
-			}
-		}
-		if(PosNode != null){
-			print("Targeted a Node");
-			TargetNode = PosNode;	
-		}
-	}
 	void CollectCheck() {
 		gameObject.GetComponent<Inventory>().Check(TargetNode.GetComponent<ResourceNode>().ItemID);
 		if (gameObject.GetComponent<Inventory>().CanHold == true)
@@ -157,7 +179,6 @@ public class Ai : MonoBehaviour {
 	}
 
 
-	#endregion
 	#endregion
 
 
