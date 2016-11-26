@@ -6,7 +6,9 @@ public class Loading : MonoBehaviour {
 	void Update () {
 		if (Statics.ImportFinished == true)
         {
-            Debug.Log("Swaping to Main Scene");
+            if (Statics.Debug) {
+                Debug.Log ("Swaping to Main Scene");
+            }
             SceneManager.LoadScene("Main");
 		}
 	}

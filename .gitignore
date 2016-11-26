@@ -33,3 +33,4 @@ sysinfo.txt
 # Custom
 .gitignore
 *.meta
+ProjectSettings/

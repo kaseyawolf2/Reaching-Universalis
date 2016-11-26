@@ -76,8 +76,8 @@ public class Player : MonoBehaviour {
 
 		#region Raycasting for Interactions
 
-		if(Input.GetButtonDown("Inventory") || Input.GetButtonDown("Harvest") || Statics.ShowMouse == true){
-			StopCoroutine(Wait());
+		if(Input.GetButtonDown("Inventory") || Input.GetButtonDown("Harvest") /*|| Statics.ShowMouse == true */ ){
+			StopCoroutine(Wait(5));
 			gameObject.GetComponent<Inventory>().TarObj = null;
 			ray = new Ray(Cam.transform.position, Cam.transform.forward);
 			if (Physics.Raycast(ray, out hit,2)) {
@@ -87,13 +87,13 @@ public class Player : MonoBehaviour {
 			}
 
 		} else {
-			StartCoroutine(Wait ());
+			StartCoroutine(Wait (5));
 		}
 		#endregion
 
 	}
-	IEnumerator Wait(){
-		yield return new WaitForSeconds(5);
+	IEnumerator Wait(int Time){
+		yield return new WaitForSeconds(Time);
 		gameObject.GetComponent<Inventory>().TarObj = null;
 	}
 

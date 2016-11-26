@@ -41,8 +41,9 @@ public class Inventory_GUI : MonoBehaviour {
 		if(Input.GetButtonDown("Inventory")){
 			InvTog = !InvTog;
 			Statics.ShowMouse = !Statics.ShowMouse;
-			GetTarget ();
-		}
+            GetTarget ();
+            Debug.Log ("Target: " + Target.name);
+        }
 	}
 	public void GetTarget(){
 		Target = gameObject.GetComponent<Inventory> ().TarObj;

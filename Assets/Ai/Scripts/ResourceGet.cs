@@ -13,14 +13,7 @@ public class ResourceGet : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void LateUpdate () {
-		if (Input.GetButtonDown("Harvest")) {
-			TargetNode = gameObject.GetComponent<Inventory>().TarObj;
-			if (TargetNode != null && TargetNode.GetComponent <ResourceNode> ()) {
-				GrabResources ();
-			}
-		}
-	}
+
 
 	public void GrabResources () {
 		GetNodeInfo ();

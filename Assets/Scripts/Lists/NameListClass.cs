@@ -25,5 +25,4 @@ public class NameList : IEquatable<NameList> {
 		if (other == null) return false;
 		return (this.Name.Equals(other.Name));
 	}
-
 }
