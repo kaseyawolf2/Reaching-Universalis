@@ -51,16 +51,16 @@ public class Inventory_GUI : MonoBehaviour {
 	#region Inventory Info
 	void UpdateInvInfo(){
 		
-		gameObject.GetComponent<Inventory> ().CheckMass ();
-		gameObject.GetComponent<Inventory> ().CheckVolume ();
+
+
+		gameObject.GetComponent<Inventory> ().HoldInfo ();
 
 		AvlMassPlr = gameObject.GetComponent<Inventory> ().AvlMass;
 		AvlVolPlr = gameObject.GetComponent<Inventory> ().AvlVolume;
 		MaxMassPlr = gameObject.GetComponent<Inventory> ().MaxMass;
 		MaxVolPlr = gameObject.GetComponent<Inventory> ().MaxVolume;
 
-		Target.GetComponent<Inventory> ().CheckMass ();
-		Target.GetComponent<Inventory> ().CheckVolume ();
+        Target.GetComponent<Inventory>().HoldInfo ();
 
 		AvlMassTar = Target.GetComponent<Inventory> ().AvlMass;
 		AvlVolTar = Target.GetComponent<Inventory> ().AvlVolume;
@@ -139,10 +139,8 @@ public class Inventory_GUI : MonoBehaviour {
 								UpdateInvInfo ();
 								int HeldID = CountPlr;
 								ItemList TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];
-								//Send Request to Check inventory
-								Target.GetComponent<Inventory> ().Check (TarID.ItemID);
 								//Check if it can hold the item
-								if(Target.GetComponent<Inventory>().CanHold){
+								if(Target.GetComponent<Inventory>().Check(TarID.ItemID)) {
 									gameObject.GetComponent<Inventory> ().RemoveItem (HeldID);
 									Target.GetComponent<Inventory>().AddItem (HeldID);
 									GetLists ();
@@ -168,9 +166,8 @@ public class Inventory_GUI : MonoBehaviour {
 								UpdateInvInfo ();
 								int ID = CountTar;
 								ItemList TarID = Target.GetComponent<Inventory> ().HeldItems [ID];
-								gameObject.GetComponent<Inventory> ().Check (TarID.ItemID);
 								//Check if it can hold the item
-								if (gameObject.GetComponent<Inventory> ().CanHold) {
+								if (gameObject.GetComponent<Inventory> ().Check(TarID.ItemID)) {
 									Target.GetComponent<Inventory> ().RemoveItem (ID);
 									gameObject.GetComponent<Inventory> ().AddItem (ID);
 									GetLists ();

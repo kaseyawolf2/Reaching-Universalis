@@ -27,8 +27,7 @@ public class ResourceGet : MonoBehaviour {
 		ItemID = TargetNode.GetComponent<ResourceNode> ().ItemID;
 		if (ResourceAmount > 0) {
 			Debug.Log ("It has Resources");
-			gameObject.GetComponent<Inventory> ().Check (ItemID);
-			if (gameObject.GetComponent<Inventory> ().CanHold == true) {
+			if (gameObject.GetComponent<Inventory> ().Check(ItemID) == true) {
 				Debug.Log ("Can Hold the " + Statics.Items[ItemID].Name);
 				TargetNode.GetComponent<ResourceNode> ().ResourceAmt = (TargetNode.GetComponent<ResourceNode> ().ResourceAmt - 1);
 				gameObject.GetComponent<Inventory> ().AddItem (ItemID);

@@ -5,21 +5,12 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour {
 	
 	#region Initial Statements
-	public float VolumeHeld;
 	public float MaxVolume;
-	public float AvlVolume;
-	public float MassHeld;
 	public float MaxMass;
-	public float AvlMass;
-	public bool CanHold;
-	//Resource Statements
-	float ResourceVol;
-	float ResourceMas;
-	string ResourceName;
-	//Item Addtion/Removeal
-	string Name = "Stone";
-	//Inventorys
-	public List<ItemList> HeldItems = new List<ItemList> ();
+    public float AvlMass;
+    public float AvlVolume;
+    //Inventorys
+    public List<ItemList> HeldItems = new List<ItemList> ();
 	//Target
 	public GameObject TarObj;
 
@@ -35,46 +26,30 @@ public class Inventory : MonoBehaviour {
 
 	#region Checking
 
-	public void Check(int ID){
-		ResourceVol = Statics.Items[ID].Volume;
-		ResourceMas = Statics.Items[ID].Mass;
-		ResourceName = Statics.Items[ID].Name;
-		CheckLift ();
-	}
+    public bool Check(int ID) {
+        
+        
+        if (AvlMass <= Statics.Items[ID].Mass && AvlVolume <= Statics.Items[ID].Volume) {
+            return true;
+        }
+        return false;     
+    }
 
-	public void CheckLift () {
-		CheckMass();
-		CheckVolume();
-		CheckRoom ();
-		if (AvlMass < ResourceMas || AvlVolume < ResourceVol) {
-			CanHold = false;
-		} else {
-			CanHold = true;
-		}
-	}
+    public void HoldInfo()
+    {
+        float HoldMass = 0;
+        float HoldVolume = 0;
+        foreach (ItemList Item in HeldItems)
+        {
+            HoldMass += Item.Mass;
+            HoldVolume += Item.Volume;
+        }
+        AvlMass = MaxMass - HoldMass;
+        AvlVolume = MaxVolume - HoldVolume;
+    }
+    
 
-	void CheckRoom () {
-		AvlMass = MaxMass - MassHeld;
-		AvlVolume = MaxVolume - VolumeHeld;
-	}
-
-	public void CheckMass(){
-		MassHeld = 0;
-		foreach(ItemList c in HeldItems){
-			MassHeld += c.Mass;
-		}
-		CheckRoom ();
-	}
-	public void CheckVolume(){
-		VolumeHeld = 0;
-		foreach(ItemList c in HeldItems){
-			VolumeHeld += c.Volume;
-		}
-		CheckRoom ();
-	}
-
-	public void CheckInv () {
-		CheckRoom ();
+    public void CheckInv () {
 		Debug.Log ("Number of items in Inventory: " + HeldItems.Count);
 		foreach (ItemList c in HeldItems)
 			Debug.Log (c);
