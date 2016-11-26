@@ -158,8 +158,8 @@ public class Ai : MonoBehaviour {
 
 
 	void CollectCheck() {
-		gameObject.GetComponent<Inventory>().Check(TargetNode.GetComponent<ResourceNode>().ItemID);
-		if (gameObject.GetComponent<Inventory>().CanHold == true)
+		gameObject.GetComponent<Inventory>();
+		if (gameObject.GetComponent<Inventory>().Check(TargetNode.GetComponent<ResourceNode>().ItemID))
 		{
 			Collect();
 		}
