@@ -1,7 +1,0 @@
-<ListOfTask>
-  <Task file="" description="Add Global Item List" completed="True" />
-  <Task file="" description="Get correct item into inventory" completed="True" />
-  <Task file="" description="Create Inventory" priority="High" completed="True" />
-  <Task file="" description="Write Ai" priority="Low" />
-  <Task file="" description="Get the Remove item complete" />
-</ListOfTask>
