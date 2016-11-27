@@ -13,26 +13,22 @@ public class Ai : MonoBehaviour {
     public float PlayerDistance;
     public Vector3 other;
 
-    //movement
+    //Movement
     public Transform Goal;
     public float Distance;
     public float Speed = 1;
+
+    //Attributes
+    int Range = 3;
 
     //Teleportation
     float WaitTime;
 
     //Node Info
-    GameObject[] NodeList;
     public GameObject TargetNode;
-    GameObject TargetStorage;
 
     public float NodeDistance;
-    GameObject PosNode;
 
-    //Target
-    public string TargetResource = "Stone";
-
-    public int A;
 
     #endregion
 
@@ -60,14 +56,12 @@ public class Ai : MonoBehaviour {
         name = CharName;
         Player = GameObject.FindGameObjectWithTag ("Player").transform;
 
+        
+        Get (Find ("Resource Node", "Stone", 4));
+
     }
 
-    int x = 0;
     void Update () {
-        if (x == 0) {
-            x = 1;
-            print (Find ("Resource Node", "Stone").name);
-        }
     }
     #region Distance Check
     void DistCheck () {
@@ -90,7 +84,6 @@ public class Ai : MonoBehaviour {
     #endregion
     #region Ai
     void DecisionAI () {
-
     }
 
     #region Basic Fuctions
@@ -101,7 +94,6 @@ public class Ai : MonoBehaviour {
         // 2 - Far
         // 3 - Smallest
         // 4 - Largest
-        print ("SearchStyle " + SearchStyle);
 
         GameObject CurrentItem = null;
         float Store = 0;
@@ -119,17 +111,17 @@ public class Ai : MonoBehaviour {
                     if (SearchStyle == 1) {
                         if (Distance < Store) {
                             CurrentItem = Item.gameObject;
-                            NodeDistance = Distance;
+                            Store = Distance;
                         }
                     }
                     if (SearchStyle == 2) {
                         if (Distance > Store) {
                             CurrentItem = Item.gameObject;
-                            NodeDistance = Distance;
+                            Store = Distance;
                         }
                     }
                     if (SearchStyle == 3) {
-                        if (Item.GetComponent<ResourceNode>().ResourceAmt < Store) {
+                        if (Item.GetComponent<ResourceNode> ().ResourceAmt < Store) {
                             CurrentItem = Item.gameObject;
                             Store = Item.GetComponent<ResourceNode> ().ResourceAmt;
                         }
@@ -143,17 +135,64 @@ public class Ai : MonoBehaviour {
                 }
             }
         }
-        print ("List Lenght " + List.Length);
         return CurrentItem;
     }
 
     void Get (GameObject Item) {
+        if (Vector3.Distance (Item.transform.position, gameObject.transform.position) <= Range) {
+            if (gameObject.GetComponent<Inventory> ().Check (Item.GetComponent<ResourceNode> ().ItemID)) {
+                print ("Can pick up");
+                // Code in picking up items
 
-    }
-    void MoveTo () {
+            }
+            else {
+                gameObject.GetComponent<Inventory> ().HoldInfo ();
+                float Mass = Item.GetComponent<ResourceNode> ().ResourceMas - gameObject.GetComponent<Inventory> ().AvlMass;
+                float Volume = Item.GetComponent<ResourceNode> ().ResourceVol - gameObject.GetComponent<Inventory> ().AvlVolume;
 
+                print ("Cant Hold Need " + Volume + " More Volume and " + Mass + " More Mass");
+            }
+        }
+        else {
+            MoveTo (Item);
+        }
+
+
+        //if in range - Done
+        //  if have room - Done
+        //      pick up 
+        //  else tell player cant pick up - 
+        //else invoke moveto - Done
+        //
     }
+    void MoveTo (GameObject Goal) {
+        NavMeshAgent Agent = GetComponent<NavMeshAgent> ();
+        Agent.stoppingDistance = Range;
+        Agent.destination = Goal.transform.position;        
+            //find path to target - Done
+            //follow path - Done
+        }
     void Use () {
+        //is object useable
+        //  is the objest useable this selceted item
+        //  else alert player
+        //else alert player
+    }
+    void Equip (int ItemID, int SlotID) {
+        //pull requirements from item
+
+        //if meet requrements
+        // check if it has a slot to go in to
+        //equip
+    }
+    void UnEquip (int SlotID) {
+        //see if item is in slot
+           //if there is move to inventory if theres room
+    }
+    void Drop () {
+
+    }
+    void Transfer () {
 
     }
     #endregion
@@ -168,7 +207,7 @@ public class Ai : MonoBehaviour {
     void Collect () {
         Goal = TargetNode.transform;
         UpdateNodeDis ();
-        if (NodeDistance > 2) {
+        if (NodeDistance > Range) {
             TeleportStart ();
         }
     }

@@ -39,20 +39,23 @@ public class Inventory_GUI : MonoBehaviour {
 
 	void Update(){
 		if(Input.GetButtonDown("Inventory")){
-			InvTog = !InvTog;
-			Statics.ShowMouse = !Statics.ShowMouse;
-            GetTarget ();
-            Debug.Log ("Target: " + Target.name);
+            ShowInventory ();
         }
 	}
+
+    void ShowInventory () {
+        InvTog = !InvTog;
+        Statics.ShowMouse = !Statics.ShowMouse;
+        GetTarget ();
+    }
+
 	public void GetTarget(){
+        gameObject.GetComponent<Player> ().RaycastTarget ();
 		Target = gameObject.GetComponent<Inventory> ().TarObj;
 		GetLists ();
 	}
 	#region Inventory Info
 	void UpdateInvInfo(){
-		
-
 
 		gameObject.GetComponent<Inventory> ().HoldInfo ();
 
@@ -100,7 +103,7 @@ public class Inventory_GUI : MonoBehaviour {
 				}
 					//Down
 				if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, ((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6, 25, 25),"v")){
-					MaxPagePlr = PlrItem.Count / MaxNumEntrys;
+					MaxPagePlr = Mathf.CeilToInt (PlrItem.Count / MaxNumEntrys) - 1;
 					if(PageNumPlr < MaxPagePlr){
 						PageNumPlr += 1;
 					}
@@ -110,16 +113,16 @@ public class Inventory_GUI : MonoBehaviour {
 			if (Target != null && Target.GetComponent<Inventory> () != null) {
 				//Up
 				if (GUI.Button (new Rect ((Screen.width / 2) + (Screen.width / 3) - InventoryBevel * 8, (Screen.height / 6) + InventoryBevel * 3, 25, 25), "^")) {
-					MaxPageTar = PlrItem.Count / MaxNumEntrys;
+					MaxPageTar = Mathf.CeilToInt (TarItem.Count / MaxNumEntrys) - 1;
 					if (PageNumTar > 0) {
 						PageNumTar -= 1;
 					}
 				}
 				//Down
 				if (GUI.Button (new Rect ((Screen.width / 2) + (Screen.width / 3) - InventoryBevel * 8, ((Screen.height / 1.5f) - InventoryBevel * 2) + (Screen.height / 6) - InventoryBevel * 6, 25, 25), "v")) {
-					MaxPageTar = PlrItem.Count / MaxNumEntrys;
-					if (PageNumTar > 0) {
-						PageNumTar -= 1;
+					MaxPageTar = TarItem.Count / MaxNumEntrys;
+					if (PageNumTar < MaxPageTar) {
+						PageNumTar += 1;
 					}
 				}
 			}
