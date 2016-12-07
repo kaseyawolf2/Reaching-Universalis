@@ -21,13 +21,13 @@ public class Ai : MonoBehaviour {
     //Attributes
     int Range = 3;
 
-    //Teleportation
-    float WaitTime;
-
     //Node Info
     public GameObject TargetNode;
-
     public float NodeDistance;
+
+    //Survival
+    public float Hunger;
+    public float Thirst;
 
 
     #endregion
@@ -50,18 +50,28 @@ public class Ai : MonoBehaviour {
     #endregion
 
 
+
+    void GrabResources (GameObject TargetNode) {
+
+    }
+
+
+
     void Start () {
         AiLevel = 1;
         RandomizeName ();
         name = CharName;
         Player = GameObject.FindGameObjectWithTag ("Player").transform;
 
-        
-        Get (Find ("Resource Node", "Stone", 4));
+
+
 
     }
 
     void Update () {
+        Hunger -= 0.0005f;
+        Thirst -= 0.0005f;
+        Survive ();
     }
     #region Distance Check
     void DistCheck () {
@@ -89,7 +99,7 @@ public class Ai : MonoBehaviour {
     #region Basic Fuctions
     GameObject Find (string TagtoFind, string ItemNameToFind, int SearchStyle = 1) {
         //Search Styles #defaults to 1
-        // 0 - All == Cant do need new fuction
+        // 0 - No Item
         // 1 - Closest
         // 2 - Far
         // 3 - Smallest
@@ -142,7 +152,17 @@ public class Ai : MonoBehaviour {
         if (Vector3.Distance (Item.transform.position, gameObject.transform.position) <= Range) {
             if (gameObject.GetComponent<Inventory> ().Check (Item.GetComponent<ResourceNode> ().ItemID)) {
                 print ("Can pick up");
-                // Code in picking up items
+                if (Item.GetComponent<ResourceNode> ().ResourceAmt > 0) {
+                    Debug.Log ("It has Resources");
+                    if (gameObject.GetComponent<Inventory> ().Check (Item.GetComponent<ResourceNode> ().ItemID) == true) {
+                        Debug.Log ("Can Hold the " + Statics.Items[Item.GetComponent<ResourceNode> ().ItemID].Name);
+                        Item.GetComponent<ResourceNode> ().ResourceAmt = (Item.GetComponent<ResourceNode> ().ResourceAmt - 1);
+                        gameObject.GetComponent<Inventory> ().AddItem (Item.GetComponent<ResourceNode> ().ItemID);
+                    }
+                    else {
+                        Debug.Log ("Cant Hold The " + Statics.Items[Item.GetComponent<ResourceNode> ().ItemID].Name);
+                    }
+                }
 
             }
             else {
@@ -156,6 +176,7 @@ public class Ai : MonoBehaviour {
         else {
             MoveTo (Item);
         }
+        return;
 
 
         //if in range - Done
@@ -167,12 +188,23 @@ public class Ai : MonoBehaviour {
     }
     void MoveTo (GameObject Goal) {
         NavMeshAgent Agent = GetComponent<NavMeshAgent> ();
-        Agent.stoppingDistance = Range;
-        Agent.destination = Goal.transform.position;        
-            //find path to target - Done
-            //follow path - Done
+        Agent.stoppingDistance = Range - 1;
+        Agent.destination = Goal.transform.position;
+        //find path to target - Done
+        //follow path - Done
+    }
+    void Use (int ItemID) {
+        if (gameObject.GetComponent<Inventory> ().CheckforItem (ItemID)) {
+            Hunger += Statics.Items[ItemID].HungerChange;
+            Thirst += Statics.Items[ItemID].ThirstChange;
+            gameObject.GetComponent<Inventory> ().RemoveItem (gameObject.GetComponent<Inventory> ().GetItemPos (ItemID));
         }
-    void Use () {
+        else {
+            print ("Can't use Item");
+        }
+
+
+        return;
         //is object useable
         //  is the objest useable this selceted item
         //  else alert player
@@ -185,69 +217,85 @@ public class Ai : MonoBehaviour {
         // check if it has a slot to go in to
         //equip
     }
-    void UnEquip (int SlotID) {
+    void Unequip (int SlotID) {
         //see if item is in slot
-           //if there is move to inventory if theres room
+        //if there is move to inventory if theres room
     }
     void Drop () {
+        //
 
     }
-    void Transfer () {
-
+    void Transfer (GameObject Goal, int ItemID) {
+        if (Goal == null) {
+            return;
+        }
+        if (Vector3.Distance (Goal.transform.position, gameObject.transform.position) <= Range) {
+            if (Goal.GetComponent<Inventory> ().Check (ItemID)) {
+                Goal.GetComponent<Inventory> ().AddItem (ItemID);
+                gameObject.GetComponent<Inventory> ().RemoveItem (ItemID);
+            }
+            else {
+                print ("Goal cant hold item");
+            }            
+        }
+        else {
+            MoveTo (Goal);
+        }
     }
     #endregion
 
+    #region Mid Fuctions
 
-    void CollectCheck () {
-        gameObject.GetComponent<Inventory> ();
-        if (gameObject.GetComponent<Inventory> ().Check (TargetNode.GetComponent<ResourceNode> ().ItemID)) {
-            Collect ();
+    void GetFood (int Type) {
+        // 0 - Food
+        // 1 - Drink
+        if (Type == 0) {
+            Get (Find ("Resource Node", "MRE", 1));
+            Use (1);
+        }
+        if (Type == 1) {
+            Get (Find ("Resource Node", "Water", 1));
+            Use (2);
         }
     }
-    void Collect () {
-        Goal = TargetNode.transform;
-        UpdateNodeDis ();
-        if (NodeDistance > Range) {
-            TeleportStart ();
+
+    void MakeMoney () {
+        GameObject Node = Find ("Resource Node", "Stone", 1);
+        int ID = Node.GetComponent<ResourceNode> ().ItemID;
+        Get (Node);
+        foreach(ItemList Item in gameObject.GetComponent<Inventory> ().HeldItems) {
+            if (Item.ItemID == ID) {
+                Transfer (Find ("Storage", "Ai Storage",1), ID);
+            }
         }
+        
+
     }
 
-    void UpdateNodeDis () {
-        NodeDistance = Vector3.Distance (TargetNode.transform.position, transform.position);
-    }
 
 
     #endregion
 
+    #region End Fuctions
 
 
-    #region Movement
-    void Movement () {
-        if (Goal != null) {
-            TeleportStart ();
+
+
+    void Survive () {
+        if (Thirst < 15) {
+            GetFood (1);
+
         }
-    }
-
-    void TeleportStart () {
-        Debug.Log ("Started Teleport");
-        Distance = Vector3.Distance (Goal.position, gameObject.transform.position);
-        WaitTime = Distance / Speed;
-        Debug.Log ("Wait Time = " + WaitTime);
-        StartCoroutine (TeleportWait ());
+        else if (Hunger < 15) {
+            GetFood (0);
+        }
+        else {
+            MakeMoney ();
+        }
 
     }
-    IEnumerator TeleportWait () {
-        Debug.Log ("Started Teleport Wait");
-        yield return new WaitForSeconds (WaitTime);
-        Teleport ();
-    }
-    void Teleport () {
-        Debug.Log ("Teleported");
-        gameObject.transform.position = new Vector3 (Goal.position.x + 2, Goal.position.y + 2, Goal.position.z + 2);
-    }
+
     #endregion
 
-
-
-
+    #endregion
 }

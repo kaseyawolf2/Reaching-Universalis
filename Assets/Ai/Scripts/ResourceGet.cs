@@ -3,10 +3,6 @@ using System.Collections;
 
 public class ResourceGet : MonoBehaviour {
 
-	public int ResourceAmount;
-	public GameObject TargetNode;
-	public int ItemID;
-
 	// Use this for initialization
 	void Start () {
 
@@ -15,23 +11,5 @@ public class ResourceGet : MonoBehaviour {
 	// Update is called once per frame
 
 
-	public void GrabResources () {
-		GetNodeInfo ();
-		ItemID = TargetNode.GetComponent<ResourceNode> ().ItemID;
-		if (ResourceAmount > 0) {
-			Debug.Log ("It has Resources");
-			if (gameObject.GetComponent<Inventory> ().Check(ItemID) == true) {
-				Debug.Log ("Can Hold the " + Statics.Items[ItemID].Name);
-				TargetNode.GetComponent<ResourceNode> ().ResourceAmt = (TargetNode.GetComponent<ResourceNode> ().ResourceAmt - 1);
-				gameObject.GetComponent<Inventory> ().AddItem (ItemID);
-			} else {
-				Debug.Log ("Cant Hold The " + Statics.Items[ItemID].Name);
-			}
-		}
-		GetNodeInfo ();
-	}
-
-	void GetNodeInfo () {
-		ResourceAmount = TargetNode.GetComponent<ResourceNode> ().ResourceAmt;
-	}
+	
 }

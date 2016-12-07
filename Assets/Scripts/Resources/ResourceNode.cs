@@ -4,8 +4,14 @@ using System.Collections;
 public class ResourceNode : MonoBehaviour {
     public int ResourceAmt;
     public string ResourceType;
-    public int ResourceVol;
-    public int ResourceMas;
+    public float ResourceVol;
+    public float ResourceMas;
+
+    public float HungerAdd;
+    public float ThirstAdd;
+
+
+
 
     public int ItemID;
 
@@ -15,7 +21,7 @@ public class ResourceNode : MonoBehaviour {
         }
         else {
             Debug.Log ("Added Item to List: " + ResourceType);
-            Statics.Items.Add (new ItemList { ItemID = Statics.Items.Count, Name = ResourceType, Volume = ResourceVol, Mass = ResourceMas });
+            Statics.Items.Add (new ItemList { ItemID = Statics.Items.Count, Name = ResourceType, Volume = ResourceVol, Mass = ResourceMas, HungerChange = HungerAdd, ThirstChange = ThirstAdd });
         }
         ItemID = Statics.Items.Find (x => x.Name.Equals (ResourceType)).ItemID;
         gameObject.name = ResourceType;
@@ -26,6 +32,7 @@ public class ResourceNode : MonoBehaviour {
     void Update () {
 
     }
+
 
 
 

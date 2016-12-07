@@ -16,13 +16,7 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    void Start () {
-        int x = 50;
-        while ( x > 0){
-            AddItem (0);
-            x -= 1;
-        }
-        
+    void Start () {        
     }
 
     void Update () {
@@ -58,17 +52,36 @@ public class Inventory : MonoBehaviour {
             Debug.Log (c);
     }
 
+    public bool CheckforItem (int Id) {
+        foreach (ItemList Item in HeldItems) {
+            if (Item.ItemID == Id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetItemPos (int ID) {
+        if (CheckforItem (ID)) {
+            int Num = 0;
+            foreach (ItemList Item in HeldItems) {                
+                if (Item.ItemID == ID) {
+                    return Num;
+                }
+                Num += 1;
+            }
+        }
+        return -1;
+    }
+
     #endregion
 
     public void AddItem (int ID) {
         HeldItems.Add (Statics.Items[ID]);
-        Check (ID);
     }
 
     public void RemoveItem (int ID) {
         HeldItems.Remove (HeldItems[ID]);
-        Check (ID);
-
     }
 
 }

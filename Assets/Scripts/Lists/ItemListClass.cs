@@ -4,14 +4,19 @@ using System.Collections.Generic;
 
 public class ItemList : IEquatable<ItemList> {
 	public int ItemID { get; set; }
-	
-	public string Name { get; set; }
+    
+    public string Name { get; set; }
 
 	public float Volume { get; set; }
 
 	public float Mass { get; set; }
+    
+    public float HungerChange { get; set; }
 
-	public override string ToString()
+    public float ThirstChange { get; set; }
+
+
+    public override string ToString()
 	{
 		return "ID #: " + ItemID + " Name: " + "'" + Name + "'" + " Volume: " + Volume + " Mass: " + Mass;
 	}
