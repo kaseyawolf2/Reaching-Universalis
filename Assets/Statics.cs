@@ -7,6 +7,7 @@ public static class Statics {
 	static public bool ImportFinished;
 
 	static public int Seed = 195381;
+    static public int Nodes = 0;
 
 	static public List<ItemList> Items = new List<ItemList> ();
 	static public List<NameList> FirstNamesMale = new List<NameList> ();

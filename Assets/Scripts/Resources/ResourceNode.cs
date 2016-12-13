@@ -28,6 +28,12 @@ public class ResourceNode : MonoBehaviour {
 
     }
 
+    public void EmptyCheck () {
+        if (ResourceAmt <= 0) {
+            Statics.Nodes -= 1;
+            Destroy (this.gameObject);
+        }
+    }
     // Update is called once per frame
     void Update () {
 

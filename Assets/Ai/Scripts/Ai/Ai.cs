@@ -158,6 +158,7 @@ public class Ai : MonoBehaviour {
                         Debug.Log ("Can Hold the " + Statics.Items[Item.GetComponent<ResourceNode> ().ItemID].Name);
                         Item.GetComponent<ResourceNode> ().ResourceAmt = (Item.GetComponent<ResourceNode> ().ResourceAmt - 1);
                         gameObject.GetComponent<Inventory> ().AddItem (Item.GetComponent<ResourceNode> ().ItemID);
+                        Item.GetComponent<ResourceNode> ().EmptyCheck ();
                     }
                     else {
                         Debug.Log ("Cant Hold The " + Statics.Items[Item.GetComponent<ResourceNode> ().ItemID].Name);
@@ -169,7 +170,7 @@ public class Ai : MonoBehaviour {
                 gameObject.GetComponent<Inventory> ().HoldInfo ();
                 float Mass = Item.GetComponent<ResourceNode> ().ResourceMas - gameObject.GetComponent<Inventory> ().AvlMass;
                 float Volume = Item.GetComponent<ResourceNode> ().ResourceVol - gameObject.GetComponent<Inventory> ().AvlVolume;
-
+                Item.GetComponent<ResourceNode> ().EmptyCheck ();
                 print ("Cant Hold Need " + Volume + " More Volume and " + Mass + " More Mass");
             }
         }
@@ -227,6 +228,7 @@ public class Ai : MonoBehaviour {
     }
     void Transfer (GameObject Goal, int ItemID) {
         if (Goal == null) {
+            print ("No Goal");
             return;
         }
         if (Vector3.Distance (Goal.transform.position, gameObject.transform.position) <= Range) {
@@ -250,26 +252,44 @@ public class Ai : MonoBehaviour {
         // 0 - Food
         // 1 - Drink
         if (Type == 0) {
-            Get (Find ("Resource Node", "MRE", 1));
-            Use (1);
+            GameObject Node = Find ("Resource Node", "MRE", 1);
+            int ItemID = Node.GetComponent<ResourceNode> ().ItemID;
+            if (gameObject.GetComponent<Inventory> ().Check(ItemID)) {
+                Get (Node);
+            }
+            else {
+                
+            }
+            if (gameObject.GetComponent<Inventory> ().CheckforItem(ItemID)) {
+                Use (ItemID);
+            }
         }
         if (Type == 1) {
-            Get (Find ("Resource Node", "Water", 1));
-            Use (2);
+            GameObject Node = Find ("Resource Node", "Water", 1);
+            int ItemID = Node.GetComponent<ResourceNode> ().ItemID;
+            if (gameObject.GetComponent<Inventory> ().Check (ItemID)) {
+                Get (Node);
+            }
+            else {
+                
+            }
+            if (gameObject.GetComponent<Inventory> ().CheckforItem (ItemID)) {
+                Use (ItemID);
+            }
         }
     }
 
     void MakeMoney () {
         GameObject Node = Find ("Resource Node", "Stone", 1);
         int ID = Node.GetComponent<ResourceNode> ().ItemID;
-        Get (Node);
-        foreach(ItemList Item in gameObject.GetComponent<Inventory> ().HeldItems) {
+        if (gameObject.GetComponent<Inventory> ().Check (ID)) {
+            Get (Node);
+        }
+        foreach (ItemList Item in gameObject.GetComponent<Inventory> ().HeldItems) {
             if (Item.ItemID == ID) {
-                Transfer (Find ("Storage", "Ai Storage",1), ID);
+                Transfer (Find ("Storage", "Ai Storage"), ID);
             }
         }
-        
-
     }
 
 

@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour {
 
     #region Checking
 
-    public bool Check (int ID) {
+    public bool Check (int ID) { //check if you can hold item
         HoldInfo ();
         if (AvlMass >= Statics.Items[ID].Mass && AvlVolume >= Statics.Items[ID].Volume) {
             return true;
@@ -46,13 +46,13 @@ public class Inventory : MonoBehaviour {
     }
 
 
-    public void CheckInv () {
+    public void CheckInv () { //list the items in inventory
         Debug.Log ("Number of items in Inventory: " + HeldItems.Count);
         foreach (ItemList c in HeldItems)
             Debug.Log (c);
     }
 
-    public bool CheckforItem (int Id) {
+    public bool CheckforItem (int Id) { //check inventory for item
         foreach (ItemList Item in HeldItems) {
             if (Item.ItemID == Id) {
                 return true;
@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    public int GetItemPos (int ID) {
+    public int GetItemPos (int ID) { //gets the item postion in the inventory list
         if (CheckforItem (ID)) {
             int Num = 0;
             foreach (ItemList Item in HeldItems) {                
@@ -80,8 +80,12 @@ public class Inventory : MonoBehaviour {
         HeldItems.Add (Statics.Items[ID]);
     }
 
-    public void RemoveItem (int ID) {
-        HeldItems.Remove (HeldItems[ID]);
+    public void RemoveItem (int ID,bool ByID = false) {
+        if (!ByID) {
+            HeldItems.Remove (HeldItems[GetItemPos (ID)]);
+        }
+        if (ByID) {
+            HeldItems.Remove (HeldItems[ID]);
+        }
     }
-
 }
