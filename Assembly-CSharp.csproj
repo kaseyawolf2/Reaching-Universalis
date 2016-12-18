@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Ai\Scripts\Ai\Ai.cs" />
+     <Compile Include="Assets\Ai\Scripts\Attributes.cs" />
      <Compile Include="Assets\Ai\Scripts\Inventory.cs" />
      <Compile Include="Assets\Ai\Scripts\ResourceGet.cs" />
      <Compile Include="Assets\Player\Inventory_GUI.cs" />

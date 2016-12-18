@@ -14,8 +14,11 @@ public class Removestone : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        Node.GetComponent<Inventory> ().RemoveItem (0,true);
-        Node.GetComponent<Inventory> ().HoldInfo ();
+        if (Node.GetComponent<Inventory>().CheckforItem(2)) {
+            Node.GetComponent<Inventory> ().RemoveItem (0, true);
+            Node.GetComponent<Inventory> ().HoldInfo ();
+        }
+        
 
     }
 }

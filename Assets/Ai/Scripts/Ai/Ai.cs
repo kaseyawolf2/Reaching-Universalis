@@ -4,14 +4,10 @@ using System.Collections;
 public class Ai : MonoBehaviour {
 
     #region Intial Declerations
-    public int AiLevel;
+    NavMeshAgent Agent;
 
     //Personality
     public string CharName;
-
-    public Transform Player;
-    public float PlayerDistance;
-    public Vector3 other;
 
     //Movement
     public Transform Goal;
@@ -58,10 +54,14 @@ public class Ai : MonoBehaviour {
 
 
     void Start () {
-        AiLevel = 1;
+        Agent = GetComponent<NavMeshAgent> ();
+        Agent.stoppingDistance = Range - 1;
+        
+
+
         RandomizeName ();
         name = CharName;
-        Player = GameObject.FindGameObjectWithTag ("Player").transform;
+        //Player = GameObject.FindGameObjectWithTag ("Player").transform;
 
 
 
@@ -73,25 +73,7 @@ public class Ai : MonoBehaviour {
         Thirst -= 0.0005f;
         Survive ();
     }
-    #region Distance Check
-    void DistCheck () {
-        other = Player.position;
-        PlayerDistance = Vector3.Distance (other, transform.position);
-        Check ();
-    }
 
-    void Check () {
-        if (PlayerDistance <= 10) {
-            AiLevel = 1;
-        }
-        if (PlayerDistance > 10 && PlayerDistance < 15) {
-            AiLevel = 2;
-        }
-        if (PlayerDistance >= 15) {
-            AiLevel = 3;
-        }
-    }
-    #endregion
     #region Ai
     void DecisionAI () {
     }
@@ -159,6 +141,7 @@ public class Ai : MonoBehaviour {
                         Item.GetComponent<ResourceNode> ().ResourceAmt = (Item.GetComponent<ResourceNode> ().ResourceAmt - 1);
                         gameObject.GetComponent<Inventory> ().AddItem (Item.GetComponent<ResourceNode> ().ItemID);
                         Item.GetComponent<ResourceNode> ().EmptyCheck ();
+                        Agent.ResetPath ();
                     }
                     else {
                         Debug.Log ("Cant Hold The " + Statics.Items[Item.GetComponent<ResourceNode> ().ItemID].Name);
@@ -187,13 +170,14 @@ public class Ai : MonoBehaviour {
         //else invoke moveto - Done
         //
     }
-    void MoveTo (GameObject Goal) {
-        NavMeshAgent Agent = GetComponent<NavMeshAgent> ();
-        Agent.stoppingDistance = Range - 1;
+
+    void MoveTo (GameObject Goal) {        
+        
         Agent.destination = Goal.transform.position;
         //find path to target - Done
         //follow path - Done
     }
+
     void Use (int ItemID) {
         if (gameObject.GetComponent<Inventory> ().CheckforItem (ItemID)) {
             Hunger += Statics.Items[ItemID].HungerChange;
@@ -211,6 +195,7 @@ public class Ai : MonoBehaviour {
         //  else alert player
         //else alert player
     }
+
     void Equip (int ItemID, int SlotID) {
         //pull requirements from item
 
@@ -218,14 +203,17 @@ public class Ai : MonoBehaviour {
         // check if it has a slot to go in to
         //equip
     }
+
     void Unequip (int SlotID) {
         //see if item is in slot
         //if there is move to inventory if theres room
     }
+
     void Drop () {
         //
 
     }
+
     void Transfer (GameObject Goal, int ItemID) {
         if (Goal == null) {
             print ("No Goal");
@@ -233,6 +221,7 @@ public class Ai : MonoBehaviour {
         }
         if (Vector3.Distance (Goal.transform.position, gameObject.transform.position) <= Range) {
             if (Goal.GetComponent<Inventory> ().Check (ItemID)) {
+                Agent.ResetPath();
                 Goal.GetComponent<Inventory> ().AddItem (ItemID);
                 gameObject.GetComponent<Inventory> ().RemoveItem (ItemID);
             }
