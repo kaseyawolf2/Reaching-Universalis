@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Attributes : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    int Agility;
+    int Strength;
+    int Charisma;
+    int Intelligence;
+    int Luck;
+    int Constitution;
+
+    void Start () {
+        if(gameObject.tag == "Ai")
+    }
+
 }
