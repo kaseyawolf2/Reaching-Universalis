@@ -9,17 +9,9 @@ public class Ai : MonoBehaviour {
     //Personality
     public string CharName;
 
-    //Movement
-    public Transform Goal;
-    public float Distance;
-    public float Speed = 1;
 
     //Attributes
     int Range = 3;
-
-    //Node Info
-    public GameObject TargetNode;
-    public float NodeDistance;
 
     //Survival
     public float Hunger;
@@ -54,6 +46,11 @@ public class Ai : MonoBehaviour {
 
 
     void Start () {
+
+        gameObject.GetComponent<Attributes>().Agility = Random.Range (1, 10);
+
+        gameObject.GetComponent<Attributes> ().AgilityUpdate();
+
         Agent = GetComponent<NavMeshAgent> ();
         Agent.stoppingDistance = Range - 1;
         
