@@ -3,8 +3,13 @@ using System.Collections;
 
 public class Ai : MonoBehaviour {
 
+    public int NumIteminInv;
+
     #region Intial Declerations
     NavMeshAgent Agent;
+
+   
+   
 
     //Personality
     public string CharName;
@@ -46,10 +51,7 @@ public class Ai : MonoBehaviour {
 
 
     void Start () {
-
-        gameObject.GetComponent<Attributes>().Agility = Random.Range (1, 10);
-
-        gameObject.GetComponent<Attributes> ().AgilityUpdate();
+        SetAttributes ();
 
         Agent = GetComponent<NavMeshAgent> ();
         Agent.stoppingDistance = Range - 1;
@@ -63,6 +65,28 @@ public class Ai : MonoBehaviour {
 
 
 
+    }
+
+    void SetAttributes () {
+        gameObject.GetComponent<Attributes> ().Agility = Random.Range (1, 10);
+        gameObject.GetComponent<Attributes> ().Strength = Random.Range (1, 10);
+        gameObject.GetComponent<Attributes> ().Charisma = Random.Range (1, 10);
+        gameObject.GetComponent<Attributes> ().Intelligence = Random.Range (1, 10);
+        gameObject.GetComponent<Attributes> ().Luck = Random.Range (1, 10);
+        gameObject.GetComponent<Attributes> ().Constitution = Random.Range (1, 10);
+
+
+
+
+
+
+
+        gameObject.GetComponent<Attributes> ().AgilityUpdate ();
+        gameObject.GetComponent<Attributes> ().StrengthUpdate ();
+        gameObject.GetComponent<Attributes> ().CharismaUpdate ();
+        gameObject.GetComponent<Attributes> ().IntelligenceUpdate ();
+        gameObject.GetComponent<Attributes> ().LuckUpdate ();
+        gameObject.GetComponent<Attributes> ().ConstitutionUpdate ();
     }
 
     void Update () {
@@ -288,6 +312,7 @@ public class Ai : MonoBehaviour {
 
 
     void Survive () {
+        NumIteminInv = gameObject.GetComponent<Inventory> ().HeldItems.Count;
         if (Thirst < 15) {
             GetFood (1);
 

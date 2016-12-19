@@ -17,7 +17,7 @@ public class Attributes : MonoBehaviour {
 
     //Strength
     public int Strength;
-    int BaseCarryMass;
+    int BaseCarryMass = 100;
     //int BaseCarryVolume; i dont want it to be tied to strength
 
 
@@ -49,8 +49,7 @@ public class Attributes : MonoBehaviour {
     }
 
     public float ExperienceCurve (int AttributeLevel) {
-        
-        return (float)(( AttributeLevel / 10) ^ 2);
+        return Mathf.Pow(SkillCurve (AttributeLevel), 2);
     }
     #endregion
 
@@ -58,10 +57,28 @@ public class Attributes : MonoBehaviour {
     public void AgilityUpdate () {
         NavMeshAgent Agent = gameObject.GetComponent<NavMeshAgent> ();
         Agent.speed = Mathf.Clamp( SkillCurve (Agility) * BaseSpeed , 1 , Mathf.Infinity);
-        print (SkillCurve (Agility));
+    }
+
+    public void StrengthUpdate () {
+        Inventory Inventory = gameObject.GetComponent<Inventory> ();
+        Inventory.MaxMass = SkillCurve (Strength) * BaseCarryMass;
+    }
+
+    public void CharismaUpdate () {
 
     }
 
+    public void IntelligenceUpdate () {
+
+    }
+
+    public void LuckUpdate () {
+
+    }
+
+    public void ConstitutionUpdate () {
+
+    }
 
 
 

@@ -6,7 +6,11 @@ public class Settings : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake() {
-        Random.InitState(Statics.Seed);
+        if(Statics.Seed == 0) {
+        }
+        else {
+            Random.InitState (Statics.Seed);
+        }        
 		if (Statics.ImportFinished == false)
 		{
 			SceneManager.LoadScene("Loading");
