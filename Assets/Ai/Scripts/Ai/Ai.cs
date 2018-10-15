@@ -6,7 +6,7 @@ public class Ai : MonoBehaviour {
     public int NumIteminInv;
 
     #region Intial Declerations
-    NavMeshAgent Agent;
+    UnityEngine.AI.NavMeshAgent Agent;
 
    
    
@@ -53,7 +53,7 @@ public class Ai : MonoBehaviour {
     void Start () {
         SetAttributes ();
 
-        Agent = GetComponent<NavMeshAgent> ();
+        Agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
         Agent.stoppingDistance = Range - 1;
         
 

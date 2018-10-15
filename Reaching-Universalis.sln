@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{AC5F28B4-AD50-62B2-D07C-158E0880692E}") = "Reaching-Universalis", "Assembly-CSharp.csproj", "{B4F227AF-A388-3C92-B679-156CEAEEF7FF}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{B4F227AF-A388-3C92-B679-156CEAEEF7FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

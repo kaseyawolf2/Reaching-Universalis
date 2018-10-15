@@ -55,7 +55,7 @@ public class Attributes : MonoBehaviour {
 
 
     public void AgilityUpdate () {
-        NavMeshAgent Agent = gameObject.GetComponent<NavMeshAgent> ();
+        UnityEngine.AI.NavMeshAgent Agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent> ();
         Agent.speed = Mathf.Clamp( SkillCurve (Agility) * BaseSpeed , 1 , Mathf.Infinity);
     }
 
