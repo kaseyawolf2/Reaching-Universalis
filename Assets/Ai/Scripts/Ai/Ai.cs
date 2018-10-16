@@ -51,6 +51,10 @@ public class Ai : MonoBehaviour {
 
 
     void Start () {
+
+
+        return;
+        //old start
         SetAttributes ();
 
         Agent = GetComponent<UnityEngine.AI.NavMeshAgent> ();

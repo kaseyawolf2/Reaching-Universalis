@@ -2,6 +2,7 @@
 using System.Collections;
 [RequireComponent (typeof (CharacterController))]
 public class Player : MonoBehaviour {
+
     #region Declerations
     public float movementSpeed = 5.0f;
     public float mouseSensitivity = 5.0f;
@@ -29,7 +30,9 @@ public class Player : MonoBehaviour {
         characterController = GetComponent<CharacterController> ();
         if (Camera.main == null) {
             print ("No camera");
+
         }
+
         Cam = Camera.main;
 
     }
@@ -77,8 +80,9 @@ public class Player : MonoBehaviour {
         #endregion
 
 
-        #region Raycasting for Interactions
 
+        #region Raycasting for Interactions
+        return;
         if (Input.GetButtonDown ("Inventory") || Input.GetButtonDown ("Harvest") /*|| Statics.ShowMouse == true */ ) {
             RaycastTarget ();
         }

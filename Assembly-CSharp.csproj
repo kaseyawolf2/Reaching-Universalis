@@ -56,14 +56,11 @@
      <Compile Include="Assets\Ai\Scripts\Ai\Ai.cs" />
      <Compile Include="Assets\Ai\Scripts\Attributes.cs" />
      <Compile Include="Assets\Ai\Scripts\Inventory.cs" />
-     <Compile Include="Assets\Ai\Scripts\ResourceGet.cs" />
      <Compile Include="Assets\Player\Inventory_GUI.cs" />
      <Compile Include="Assets\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Generation\NodeSpawning.cs" />
      <Compile Include="Assets\Scripts\Lists\ItemListClass.cs" />
      <Compile Include="Assets\Scripts\Lists\NameListClass.cs" />
-     <Compile Include="Assets\Scripts\Loading.cs" />
-     <Compile Include="Assets\Scripts\Removestone.cs" />
      <Compile Include="Assets\Scripts\Resources\ResourceNode.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\Xml Reading\NameReader.cs" />
