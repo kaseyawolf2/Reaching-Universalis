@@ -13,6 +13,9 @@ public class Inventory_GUI : MonoBehaviour {
 	int PageNumTar = 0;
 	int MaxPagePlr;
 	int MaxPageTar;
+	//Keybinds
+	KeyCode KbInventory = KeyCode.I;
+
 	//List Declaerations
 	List<ItemList> PlrItem;
 	List<ItemList> TarItem;
@@ -38,7 +41,7 @@ public class Inventory_GUI : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Input.GetButtonDown("Inventory")){
+		if(Input.GetKeyDown(KbInventory)){
             ShowInventory ();
         }
 	}

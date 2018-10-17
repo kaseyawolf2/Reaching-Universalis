@@ -15,6 +15,8 @@ public class Settings : MonoBehaviour {
 		{
 			SceneManager.LoadScene("Loading");
 		}
+
+		
 	}
 	
 	// Update is called once per frame
