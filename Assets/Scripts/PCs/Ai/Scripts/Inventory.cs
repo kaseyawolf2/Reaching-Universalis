@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour {
 
     #region Checking
 
-    public bool Check (int ID) { //check if you can hold item
+    public bool Check (int ID) { //check if this can hold item
         HoldInfo ();
         if (AvlMass >= Statics.Items[ID].Mass && AvlVolume >= Statics.Items[ID].Volume) {
             return true;

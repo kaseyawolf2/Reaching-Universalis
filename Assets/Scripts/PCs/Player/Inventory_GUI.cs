@@ -53,7 +53,7 @@ public class Inventory_GUI : MonoBehaviour {
     }
 
 	public void GetTarget(){
-        gameObject.GetComponent<Player> ().RaycastTarget ();
+        //gameObject.GetComponent<Player> ().RaycastTarget ();
 		Target = gameObject.GetComponent<Inventory> ().TarObj;
 		GetLists ();
 	}
