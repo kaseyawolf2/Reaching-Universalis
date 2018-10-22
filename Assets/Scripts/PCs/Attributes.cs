@@ -3,10 +3,6 @@ using System;
 
 public class Attributes : MonoBehaviour {
 
-    
-   
-    
-
     //Attributes
     int BaseExp;
 
