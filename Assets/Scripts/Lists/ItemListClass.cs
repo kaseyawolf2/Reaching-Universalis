@@ -10,7 +10,7 @@ namespace ItemSpace {
 		public int Volume;
 		public List<ItemList> CraftingItems;
 
-		public static void NewItem(int nID, string nName, int nMass, int nVolume, List<ItemList> nCraftingItems){
+		public static Item NewItem(int nID, string nName, int nMass, int nVolume, List<ItemList> nCraftingItems){
 			return new Item { 
 				ID = nID,
 				Name = nName,
