@@ -8,8 +8,26 @@ namespace ItemSpace {
 		public string Name;
 		public int Mass;
 		public int Volume;
-		public ItemList CraftingItems;
+		public List<ItemList> CraftingItems;
 
+		public static void NewItem(int nID, string nName, int nMass, int nVolume, List<ItemList> nCraftingItems){
+			return new Item { 
+				ID = nID,
+				Name = nName,
+				Mass = nMass,
+				Volume = nVolume,
+				CraftingItems = nCraftingItems
+			};
+		}	
+		public static Item NewItem(int nID, string nName, int nMass, int nVolume){
+			return new Item { 
+				ID = nID,
+				Name = nName,
+				Mass = nMass,
+				Volume = nVolume,
+				CraftingItems = new List<ItemList> ()
+			};
+		}		
 
 		public bool Equals(Item other)	
 		{	
@@ -28,13 +46,14 @@ namespace ItemSpace {
 	public class ItemList : IEquatable<ItemList> {
 
 		public Item Item;
+		public int Amount;
 
 		public override string ToString()
 		{
 			return "ID #: " + Item.ID + " Name: " + "'" + Item.Name + "'" + " Volume: " + Item.Volume + " Mass: " + Item.Mass;
 		}
 
-		public override int GetHashCode()	
+		public override int GetHashCode()
 		{	
 			return Item.ID;	
 		}	

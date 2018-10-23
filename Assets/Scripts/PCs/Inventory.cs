@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour {
             return true;
         }
         return false;
+        
     }
 
     public void HoldInfo () {
@@ -74,5 +75,5 @@ public class Inventory : MonoBehaviour {
 
     // public void RemoveItem (Item item) {
     //     HeldItems.Remove (item.ID);
-    // }
+//    }
 }
