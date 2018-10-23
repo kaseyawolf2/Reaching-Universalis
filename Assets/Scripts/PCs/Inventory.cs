@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Item;
+using ItemSpace;
 public class Inventory : MonoBehaviour {
 
     #region Initial Statements
@@ -30,8 +30,8 @@ public class Inventory : MonoBehaviour {
         float HoldMass = 0;
         float HoldVolume = 0;
         foreach (ItemList Item in HeldItems) {
-            HoldMass += Item.Mass;
-            HoldVolume += Item.Volume;
+            HoldMass += Item.Item.Mass;
+            HoldVolume += Item.Item.Volume;
         }
         AvlMass = MaxMass - HoldMass;
         AvlVolume = MaxVolume - HoldVolume;
@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour {
     public int GetItemPos (Item item) { //gets the item postion in the inventory list
         if (CheckforItem (item)) {
             int Num = 0;
-            foreach (ItemList Item in HeldItems) {                
+            foreach (ItemList Item in HeldItems) {
                 if (Item.Item == item) {
                     return Num;
                 }
@@ -68,11 +68,11 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    public void AddItem (Item item) {
-        HeldItems.Add (Statics.Items[item.ID]);
-    }
+    // public void AddItem (Item item) {
+    //     HeldItems.Add (Statics.Items[item.ID]);
+    // }
 
-    public void RemoveItem (Item item) {
-        HeldItems.Remove (item.ID);
-    }
+    // public void RemoveItem (Item item) {
+    //     HeldItems.Remove (item.ID);
+    // }
 }
