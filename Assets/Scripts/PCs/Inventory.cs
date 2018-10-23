@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using Item;
 public class Inventory : MonoBehaviour {
 
     #region Initial Statements
@@ -16,19 +16,11 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    void Start () {        
-    }
-
-    void Update () {
-
-    }
-
 
     #region Checking
-
-    public bool Check (int ID) { //check if this can hold item
+    public bool Check (Item item) { //check if this can hold item
         HoldInfo ();
-        if (AvlMass >= Statics.Items[ID].Mass && AvlVolume >= Statics.Items[ID].Volume) {
+        if (AvlMass >= item.Mass && AvlVolume >= item.Volume) {
             return true;
         }
         return false;
@@ -52,23 +44,23 @@ public class Inventory : MonoBehaviour {
             Debug.Log (c);
     }
 
-    public bool CheckforItem (int Id) { //check inventory for item
+    public bool CheckforItem (Item item) { //check inventory for item
         foreach (ItemList Item in HeldItems) {
-            if (Item.ItemID == Id) {
+            if (Item.Item == item) {
                 return true;
             }
         }
         return false;
     }
 
-    public int GetItemPos (int ID) { //gets the item postion in the inventory list
-        if (CheckforItem (ID)) {
+    public int GetItemPos (Item item) { //gets the item postion in the inventory list
+        if (CheckforItem (item)) {
             int Num = 0;
             foreach (ItemList Item in HeldItems) {                
-                if (Item.ItemID == ID) {
+                if (Item.Item == item) {
                     return Num;
                 }
-                Num += 1;
+            Num += 1;
             }
         }
         return -1;
@@ -76,16 +68,11 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    public void AddItem (int ID) {
-        HeldItems.Add (Statics.Items[ID]);
+    public void AddItem (Item item) {
+        HeldItems.Add (Statics.Items[item.ID]);
     }
 
-    public void RemoveItem (int ID,bool ByID = false) {
-        if (!ByID) {
-            HeldItems.Remove (HeldItems[GetItemPos (ID)]);
-        }
-        if (ByID) {
-            HeldItems.Remove (HeldItems[ID]);
-        }
+    public void RemoveItem (Item item) {
+        HeldItems.Remove (item.ID);
     }
 }

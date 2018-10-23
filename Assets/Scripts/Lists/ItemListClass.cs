@@ -2,41 +2,20 @@
 using System;
 using System.Collections.Generic;
 
+struct Item {
+    int ID;
+	string Name;
+    int Mass;
+    int Volume;
+	ItemList CraftingItems;
+}
+
 public class ItemList : IEquatable<ItemList> {
-	public int ItemID { get; set; }
-    
-    public string Name { get; set; }
 
-	public float Volume { get; set; }
-
-	public float Mass { get; set; }
-    
-    public float HungerChange { get; set; }
-
-    public float ThirstChange { get; set; }
-
+	public Item Item;
 
     public override string ToString()
 	{
-		return "ID #: " + ItemID + " Name: " + "'" + Name + "'" + " Volume: " + Volume + " Mass: " + Mass;
-	}
-
-	public override int GetHashCode()
-	{
-		return ItemID;
-	}
-
-	public override bool Equals(object obj)
-	{
-		if (obj == null) return false;
-		ItemList objAsPart = obj as ItemList;
-		if (objAsPart == null) return false;
-		else return Equals(objAsPart);
-	}
-
-	public bool Equals(ItemList other)
-	{
-		if (other == null) return false;
-		return (this.Name.Equals(other.Name));
+		return "ID #: " + Item.ID + " Name: " + "'" + Item.Name + "'" + " Volume: " + Item.Volume + " Mass: " + Item.Mass;
 	}
 }

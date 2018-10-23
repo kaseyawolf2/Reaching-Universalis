@@ -53,14 +53,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Ai\Scripts\Ai\Ai.cs" />
-     <Compile Include="Assets\Ai\Scripts\Attributes.cs" />
-     <Compile Include="Assets\Ai\Scripts\Inventory.cs" />
-     <Compile Include="Assets\Player\Inventory_GUI.cs" />
-     <Compile Include="Assets\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Generation\NodeSpawning.cs" />
      <Compile Include="Assets\Scripts\Lists\ItemListClass.cs" />
      <Compile Include="Assets\Scripts\Lists\NameListClass.cs" />
+     <Compile Include="Assets\Scripts\PCs\Ai\Ai.cs" />
+     <Compile Include="Assets\Scripts\PCs\Attributes.cs" />
+     <Compile Include="Assets\Scripts\PCs\Crafting.cs" />
+     <Compile Include="Assets\Scripts\PCs\Inventory.cs" />
+     <Compile Include="Assets\Scripts\PCs\Player\Inventory_GUI.cs" />
+     <Compile Include="Assets\Scripts\PCs\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Resources\ResourceNode.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
      <Compile Include="Assets\Scripts\Xml Reading\NameReader.cs" />
