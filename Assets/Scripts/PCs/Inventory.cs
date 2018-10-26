@@ -69,11 +69,11 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    // public void AddItem (Item item) {
-    //     HeldItems.Add (Statics.Items[item.ID]);
-    // }
+    public void AddItem (Item item) {
+        HeldItems.Add ( new ItemList { Item = item });
+    }
 
-    // public void RemoveItem (Item item) {
-    //     HeldItems.Remove (item.ID);
-//    }
+    public void RemoveItem (Item item) {
+        HeldItems.RemoveAt( GetItemPos(item) );
+    }
 }

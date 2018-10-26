@@ -69,5 +69,5 @@ namespace ItemSpace {
 			if (other == null) return false;	
 			return (this.Item.Equals(other.Item));	
 		}
-}
+	}
 }
