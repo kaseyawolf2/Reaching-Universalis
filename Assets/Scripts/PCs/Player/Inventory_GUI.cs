@@ -78,6 +78,7 @@ public class Inventory_GUI : MonoBehaviour {
 
 	void GetLists(){
 		PlrItem = gameObject.GetComponent<Inventory>().HeldItems;
+		//PlrItem = Statics.Items;
 		if (Target != null && Target.GetComponent<Inventory> () != null) {
 			TarItem = Target.GetComponent<Inventory> ().HeldItems;
 			UpdateInvInfo ();
@@ -100,6 +101,8 @@ public class Inventory_GUI : MonoBehaviour {
 				#region Player
 					//Up
 				if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + InventoryBevel * 3, 25, 25),"^")){
+					gameObject.GetComponent<Inventory>().AddItem(Statics.Items[2].Item);
+					
 					MaxPagePlr = PlrItem.Count / MaxNumEntrys;
 					if (PageNumPlr > 0 ) {
 						PageNumPlr -= 1;
@@ -107,6 +110,9 @@ public class Inventory_GUI : MonoBehaviour {
 				}
 					//Down
 				if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, ((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6, 25, 25),"v")){
+					gameObject.GetComponent<Crafting>().Craft(Statics.Items[3].Item);
+					
+					
 					MaxPagePlr = Mathf.CeilToInt (PlrItem.Count / MaxNumEntrys) - 1;
 					if(PageNumPlr < MaxPagePlr){
 						PageNumPlr += 1;

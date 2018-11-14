@@ -9,6 +9,7 @@ namespace ItemSpace {
 		public int Mass;
 		public int Volume;
 		public List<ItemList> CraftingItems;
+		public int CraftingAmount;
 
 		public static Item NewItem(int nID, string nName, int nMass, int nVolume, List<ItemList> nCraftingItems){
 			return new Item { 
@@ -25,13 +26,13 @@ namespace ItemSpace {
 				Name = nName,
 				Mass = nMass,
 				Volume = nVolume,
-				CraftingItems = new List<ItemList> ()
+				CraftingItems = new List<ItemList> () 
 			};
 		}		
 
 		public bool Equals(Item other)	
 		{	
-			if(this.ID == other.ID){return true;}
+			if(this.Name == other.Name){return true;}
 			else{return false;}
 
 		}

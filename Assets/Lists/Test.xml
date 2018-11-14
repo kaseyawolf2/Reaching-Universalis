@@ -1,0 +1,7 @@
+<!-- <Item Name = "Item Name" Volume = "1" Mass = "1" Crafting = "Item,Amount,Item,Amount" Result = "5"/> -->
+<Item>
+    <Item Name = "Test" Volume = "1" Mass = "1"/>
+    <Item Name = "Stone" Volume = "1" Mass = "1"/>
+    <Item Name = "Wood" Volume = "1" Mass = "1"/>
+    <Item Name = "Sticks" Volume = "1" Mass = "1" Crafting = "Wood,1" Result = "5"/>
+</Item>

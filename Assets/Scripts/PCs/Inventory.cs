@@ -53,16 +53,23 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
+    public int CheckItemCount(Item item) {
+        int C=0;
+        foreach(ItemList Item in HeldItems) {
+            if(Item.Item == item){
+                C++;
+            }
+        }
+    return C;
+    }
 
     public int GetItemPos (Item item) { //gets the item postion in the inventory list
-        if (CheckforItem (item)) {
-            int Num = 0;
-            foreach (ItemList Item in HeldItems) {
-                if (Item.Item == item) {
-                    return Num;
-                }
-            Num += 1;
+        int Num = 0;
+        foreach (ItemList Item in HeldItems) {
+            if (Item.Item == item) {
+                return Num;
             }
+        Num += 1;
         }
         return -1;
     }
@@ -75,5 +82,11 @@ public class Inventory : MonoBehaviour {
 
     public void RemoveItem (Item item) {
         HeldItems.RemoveAt( GetItemPos(item) );
+    }
+
+    public void PrintInv(){
+        foreach(ItemList Item in HeldItems){
+            Debug.Log(Item.ToString());
+        }
     }
 }
