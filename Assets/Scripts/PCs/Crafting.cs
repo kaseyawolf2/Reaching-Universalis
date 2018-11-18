@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using ItemSpace;
+using ListSpace;
 
 public class Crafting : MonoBehaviour {
 
@@ -9,28 +9,35 @@ public class Crafting : MonoBehaviour {
 
 	}
 
-	bool CanCraft(Item item) {
-		var Inv = gameObject.GetComponent<Inventory> ();
-		foreach(ItemList ReqItem in item.CraftingItems){
-			if ( ReqItem.Amount > Inv.CheckItemCount(ReqItem.Item)){
-				Debug.Log("Not Enough : " + ReqItem.Item.Name + " | Need : " + ReqItem.Amount + " | Have : " + Inv.CheckItemCount(ReqItem.Item));
+	bool CanCraft(Recipe recipe) {
+		Inventory Inv = gameObject.GetComponent<Inventory>();
+		foreach(ItemList Req in recipe.CraftingItems){
+			if(Inv.CheckforItem(Req.Item)){
+				if(Req.Amount <= Inv.CheckItemCount(Req.Item)) {
+					continue;
+				} else {
+					Debug.Log("Not Enough : " + Req.Item.Name + " | Need : " + Req.Amount + " | Have : " + Inv.CheckItemCount(Req.Item));
+					return false;
+				}
+			} else {
+				Debug.Log("Inventory Does Not Contain : " + Req.Item.Name);
 				return false;
 			}
 		}
 		return true;
 	}
-	public void Craft(Item item) {
-		if(!CanCraft(item)){ Debug.Log("Can't Craft " + item.Name); return;}
-		foreach(ItemList Comp in item.CraftingItems){
+	public void Craft(Recipe recipe) {
+		if(!CanCraft(recipe)){ Debug.Log("Can't Craft " + recipe.ResultingItem.Name); return;}
+		
+		foreach(ItemList Comp in recipe.CraftingItems){
 			for (int i = 0; i < Comp.Amount; i++)
 			{	
 				gameObject.GetComponent<Inventory>().RemoveItem(Comp.Item);
 			}
 		}
-		for (int i = 0; i < item.CraftingAmount; i++)
+		for (int i = 0; i < recipe.ResultingAmount; i++)
 		{	
-			gameObject.GetComponent<Inventory>().AddItem(item);
-		}
+			gameObject.GetComponent<Inventory>().AddItem(recipe.ResultingItem);
+		}		
 	}
-
 }

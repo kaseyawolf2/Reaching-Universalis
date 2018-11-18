@@ -20,6 +20,11 @@ public class Player : MonoBehaviour {
 
     //Interaction
     public Camera Cam;
+    public GameObject HitObj;
+    
+    //Raycasting
+    RaycastHit hit;
+    Ray ray;
 
     #endregion
 
@@ -77,5 +82,30 @@ public class Player : MonoBehaviour {
         characterController.Move (speed * Time.deltaTime);
 
         #endregion
+
+
+         #region Raycasting for Interactions
+        return;
+        if (Input.GetButtonDown ("Inventory") || Input.GetButtonDown ("Harvest") /*|| Statics.ShowMouse == true */ ) {
+            RaycastTarget ();
+        }
+        else {
+            StartCoroutine(Wait (5)); 
+        }
+        #endregion
+     }
+    public void RaycastTarget () {
+        StopCoroutine (Wait (5));
+        gameObject.GetComponent<Inventory> ().TarObj = null;
+        ray = new Ray (Cam.transform.position, Cam.transform.forward);
+        if (Physics.Raycast (ray, out hit, 2)) {
+            HitObj = hit.transform.gameObject;
+            gameObject.GetComponent<Inventory> ().TarObj = HitObj;
+            Debug.Log ("Hit something " + HitObj.name);
+        }
+    }
+     IEnumerator Wait (int Time) {
+        yield return new WaitForSeconds (Time);
+        gameObject.GetComponent<Inventory> ().TarObj = null;
     }
 }

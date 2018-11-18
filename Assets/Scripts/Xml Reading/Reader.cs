@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using ItemSpace;
+using ListSpace;
 
 
 public class Reader : MonoBehaviour {
@@ -16,12 +16,8 @@ public class Reader : MonoBehaviour {
 		BaseDir = System.IO.Path.GetFullPath("Assets");
 
 		Statics.Items = LoadItemList("/Lists/Test.xml");
-		foreach(ItemList Item in Statics.Items){
-			Debug.Log(Item.ToString());
-		}
-		
-
-
+		Statics.Recipes = LoadCraftingList("/Lists/Test.xml");
+		Destroy(this);
 	}
 	List<ItemList> LoadItemList(string RelFilePath) {
 		string TempDir = BaseDir + @RelFilePath;
@@ -32,28 +28,13 @@ public class Reader : MonoBehaviour {
 			{
 				while (Reader.Read ()){
 					if(Reader.NodeType == XmlNodeType.Element && Reader.Name == "Item" && Reader.HasAttributes){
-						List<ItemList> CList = new List<ItemList>();
-						if(Reader.GetAttribute("Crafting") != null){
-							string [] Hold = Reader.GetAttribute("Crafting").Split( new Char[] {','});
-							for (int i = 0; i < Hold.Length; i+=2)
-							{
-								CList.Add( new ItemList { Item = new Item {Name = Hold[i]}, Amount = Int32.Parse(Hold[i+1])});
-							}
-						}
-						int CA = 0;
-						if(Reader.GetAttribute("Result")!=null){
-						 CA = Int32.Parse(Reader.GetAttribute("Result"));
-						}
 						TempList.Add(
 							new ItemList {
 								Item = new Item {
-									ID = 	TempList.Count,
+									ID = 	Int32.Parse(Reader.GetAttribute("ID")),
 									Name = 	Reader.GetAttribute("Name"),
 									Mass = 	Int32.Parse(Reader.GetAttribute("Mass")),
-									Volume =Int32.Parse(Reader.GetAttribute("Volume")),
-									CraftingItems = CList,
-									CraftingAmount = CA
-									
+									Volume= Int32.Parse(Reader.GetAttribute("Volume"))									
 								}
 							}
 						);
@@ -68,22 +49,49 @@ public class Reader : MonoBehaviour {
             return TempList;
         }
 	}
-	void SaveItemList(string RelSavePath) {
-	string TempDir = BaseDir + @RelSavePath;
-		List<ItemList> TempList = new List<ItemList> ();
+	Item FindByID(int ID, List<ItemList> ListToSearch){
+		Item Temp = new Item { ID = ID };
+		foreach(ItemList Item in ListToSearch){
+			if(Item.Item.ID == Temp.ID){
+				return Item.Item;
+			}
+		}
+		return Temp;
+	}
+	List<CraftList> LoadCraftingList(string RelFilePath) {
+		string TempDir = BaseDir + @RelFilePath;
+		//Debug.Log(TempDir);
+		List<CraftList> TempList = new List<CraftList> ();
 		if(File.Exists(TempDir)) {
 			using (XmlTextReader Reader = new XmlTextReader(TempDir)) 
 			{
 				while (Reader.Read ()){
-					Reader.MoveToElement();
-					Debug.Log(Reader.Name);
+					if(Reader.NodeType == XmlNodeType.Element && Reader.Name == "Recipe" && Reader.HasAttributes){
+						List<ItemList> CList = new List<ItemList>();
+						string [] Hold = Reader.GetAttribute("CraftingIngredients").Split( new Char[] {','});
+						for (int i = 0; i < Hold.Length; i+=2)
+						{
+							CList.Add( new ItemList { Item = FindByID(Int32.Parse(Hold[i]),Statics.Items), Amount = Int32.Parse(Hold[i+1])});
+						}
+
+
+
+						TempList.Add( 
+							new CraftList {
+								Recipe = new Recipe {
+									CraftingItems = CList,
+									ResultingItem = FindByID(Int32.Parse(Reader.GetAttribute("ResultID")),Statics.Items),
+									ResultingAmount = Int32.Parse(Reader.GetAttribute("AmountCrafted")),
+									CraftingTime = Int32.Parse(Reader.GetAttribute("CraftingTime"))
+								}
+							}
+						);
+					}
 				}
 			}
-        }
-        else
-        {
-            Debug.LogError("No File Found At Path");
-            return;
-        }
+		}
+
+		
+	return TempList;
 	}
 }

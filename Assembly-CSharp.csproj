@@ -53,9 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Generation\Items.cs" />
      <Compile Include="Assets\Scripts\Generation\NodeSpawning.cs" />
-     <Compile Include="Assets\Scripts\Lists\ItemListClass.cs" />
+     <Compile Include="Assets\Scripts\Lists\ListsClass.cs" />
      <Compile Include="Assets\Scripts\Lists\NameListClass.cs" />
      <Compile Include="Assets\Scripts\PCs\Ai\Ai.cs" />
      <Compile Include="Assets\Scripts\PCs\Attributes.cs" />
@@ -63,12 +62,12 @@
      <Compile Include="Assets\Scripts\PCs\Inventory.cs" />
      <Compile Include="Assets\Scripts\PCs\Player\Inventory_GUI.cs" />
      <Compile Include="Assets\Scripts\PCs\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\PCs\Player\PlayerMenuGui.cs" />
+     <Compile Include="Assets\Scripts\PCs\Test.cs" />
      <Compile Include="Assets\Scripts\Resources\ResourceNode.cs" />
      <Compile Include="Assets\Scripts\Settings.cs" />
-     <Compile Include="Assets\Scripts\Xml Reading\NameReader.cs" />
      <Compile Include="Assets\Scripts\Xml Reading\Reader.cs" />
      <Compile Include="Assets\Statics.cs" />
-     <Compile Include="Assets\Test.cs" />
      <None Include="Assets\Names\FirstNamesMale.txt" />
      <None Include="Assets\Lists\Test.xml" />
      <None Include="Assets\Names\LastNames.txt" />

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using ItemSpace;
+using ListSpace;
 public class Inventory_GUI : MonoBehaviour {
 	#region Declerations
 	//Background Formanting
@@ -54,7 +54,7 @@ public class Inventory_GUI : MonoBehaviour {
     }
 
 	public void GetTarget(){
-        //gameObject.GetComponent<Player> ().RaycastTarget ();
+        gameObject.GetComponent<Player> ().RaycastTarget ();
 		Target = gameObject.GetComponent<Inventory> ().TarObj;
 		GetLists ();
 	}
@@ -88,8 +88,6 @@ public class Inventory_GUI : MonoBehaviour {
 	void OnGUI(){
 		if (InvTog == true){
 				#region Background for inventory
-				//Center Background Block
-				GUI.Box(new Rect(Screen.width/6,(Screen.height/6)-FontHeight,Screen.width/1.5f,(Screen.height/1.5f)+FontHeight),"Inventory");
 				//Left Background Box aka Player Items
 				GUI.Box (new Rect ((Screen.width / 6) + InventoryBevel, (Screen.height / 6) + InventoryBevel, (Screen.width / 3) - InventoryBevel*2, (Screen.height / 1.5f) - InventoryBevel*2), "Player Inventory");
 				//Right Background Box Aka Target's Items
@@ -99,25 +97,7 @@ public class Inventory_GUI : MonoBehaviour {
 				#endregion
 				#region Page Up/Down Arrows
 				#region Player
-					//Up
-				if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + InventoryBevel * 3, 25, 25),"^")){
-					gameObject.GetComponent<Inventory>().AddItem(Statics.Items[2].Item);
-					
-					MaxPagePlr = PlrItem.Count / MaxNumEntrys;
-					if (PageNumPlr > 0 ) {
-						PageNumPlr -= 1;
-					}
-				}
-					//Down
-				if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, ((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6, 25, 25),"v")){
-					gameObject.GetComponent<Crafting>().Craft(Statics.Items[3].Item);
-					
-					
-					MaxPagePlr = Mathf.CeilToInt (PlrItem.Count / MaxNumEntrys) - 1;
-					if(PageNumPlr < MaxPagePlr){
-						PageNumPlr += 1;
-					}
-				}
+
 				#endregion
 				#region Target
 			if (Target != null && Target.GetComponent<Inventory> () != null) {
@@ -149,18 +129,11 @@ public class Inventory_GUI : MonoBehaviour {
 							//Display Items
 							GUI.Label (new Rect ((Screen.width / 6) + InventoryBevel * 2, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), (Screen.width / 3) - InventoryBevel * 2, FontHeight), CountPlr +" "  + Plr.ToString ());
 							//Transfering Out of PLayers inventory
-							// if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), ">")){
-							// 	UpdateInvInfo ();
-							// 	int HeldID = CountPlr;
-							// 	ItemList TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];
-							// 	//Check if it can hold the item
-							// 	if(Target.GetComponent<Inventory>().Check(TarID.ItemID)) {
-							// 		gameObject.GetComponent<Inventory> ().RemoveItem (HeldID);
-							// 		Target.GetComponent<Inventory>().AddItem (HeldID);
-							// 		GetLists ();
-							// 		UpdateInvInfo ();
-							// 	}
-							// }
+							if(GUI.Button (new Rect ((Screen.width / 2) - 25 - InventoryBevel * 3, (Screen.height / 6) + (FontHeight * (CountPlr+2)) + InventoryBevel * 2 - ((PageNumPlr*(MaxNumEntrys+1))*FontHeight), FontHeight, FontHeight), ">")){
+								UpdateInvInfo ();
+								int HeldID = CountPlr;
+								ItemList TarID = gameObject.GetComponent<Inventory> ().HeldItems [HeldID];	
+							}
 						}
 					}
 					//add one to the count so we know how much to displace the GUI.Label and know when to stop

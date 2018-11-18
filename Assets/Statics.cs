@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ItemSpace;
+using ListSpace;
 
 public static class Statics {
 	
@@ -11,9 +11,7 @@ public static class Statics {
     static public int Nodes = 0;
 
 	static public List<ItemList> Items = new List<ItemList> ();
-	static public List<NameList> FirstNamesMale = new List<NameList> ();
-	static public List<NameList> FirstNamesFemale = new List<NameList>();
-	static public List<NameList> LastNames = new List<NameList> ();
+	static public List<CraftList> Recipes = new List<CraftList> ();
 
 
 }

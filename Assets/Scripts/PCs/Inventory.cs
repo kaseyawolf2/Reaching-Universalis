@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using ItemSpace;
+using ListSpace;
 public class Inventory : MonoBehaviour {
 
     #region Initial Statements
@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour {
 
 
     #region Checking
-    public bool Check (Item item) { //check if this can hold item
+    public bool CheckHold (Item item) { //check if this can hold item
         HoldInfo ();
         if (AvlMass >= item.Mass && AvlVolume >= item.Volume) {
             return true;
