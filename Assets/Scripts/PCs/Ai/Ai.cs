@@ -8,6 +8,6 @@ public class Ai : MonoBehaviour {
     }
 
     void Update() {
-
+        
     }
 }

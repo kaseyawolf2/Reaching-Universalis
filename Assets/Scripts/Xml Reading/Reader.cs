@@ -68,12 +68,13 @@ public class Reader : MonoBehaviour {
 				while (Reader.Read ()){
 					if(Reader.NodeType == XmlNodeType.Element && Reader.Name == "Recipe" && Reader.HasAttributes){
 						List<ItemList> CList = new List<ItemList>();
-						string [] Hold = Reader.GetAttribute("CraftingIngredients").Split( new Char[] {','});
-						for (int i = 0; i < Hold.Length; i+=2)
-						{
-							CList.Add( new ItemList { Item = FindByID(Int32.Parse(Hold[i]),Statics.Items), Amount = Int32.Parse(Hold[i+1])});
+						if(Reader.GetAttribute("CraftingIngredients") != null){
+							string [] Hold = Reader.GetAttribute("CraftingIngredients").Split( new Char[] {','});
+							for (int i = 0; i < Hold.Length; i+=2)
+							{
+								CList.Add( new ItemList { Item = FindByID(Int32.Parse(Hold[i]),Statics.Items), Amount = Int32.Parse(Hold[i+1])});
+							}
 						}
-
 
 
 						TempList.Add( 

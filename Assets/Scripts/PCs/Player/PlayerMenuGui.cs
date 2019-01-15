@@ -9,8 +9,8 @@ public class PlayerMenuGui : MonoBehaviour {
 	int FontHeight = 20;
 
 	//Keybinds
-	KeyCode KbInv = KeyCode.I;
-	KeyCode KbCraft = KeyCode.U;
+	KeyCode KbInv = Statics.KbInv;
+	KeyCode KbCraft = Statics.KbCraft;
 
 	//Toggles
 	bool MenuTog = false;
@@ -78,7 +78,7 @@ public class PlayerMenuGui : MonoBehaviour {
 					(Screen.height/1.5f)+FontHeight
 				),MenuString
 			);
-
+#region Player Inventory	
 			if (InvTog)
 			{
 				GUI.Box(
@@ -140,7 +140,8 @@ public class PlayerMenuGui : MonoBehaviour {
 				}
 
 			}
-
+#endregion
+#region Crafting
 			if (CraftTog){
 				GUI.Box(
 					new Rect(
@@ -163,12 +164,12 @@ public class PlayerMenuGui : MonoBehaviour {
 								(Screen.width / 3) - InventoryBevel * 2,
 								FontHeight
 							),
-							Count + " | " + recipe.Recipe.ResultingItem
+							recipe.Recipe.ResultingItem.Name
 						);
 						if(
 							GUI.Button(
 								new Rect(
-									(Screen.width / 6) + InventoryBevel * 2,
+									(Screen.width / 2),
 									(Screen.height / 6) + InventoryBevel + (FontHeight * (Count)) ,
 									(Screen.width / 3) - InventoryBevel * 2,
 									FontHeight
@@ -179,11 +180,10 @@ public class PlayerMenuGui : MonoBehaviour {
 							gameObject.GetComponent<Crafting>().Craft(recipe.Recipe);
 						}
 					}
-				//add one to the count so we know how much to displace the GUI.Label and know when to stop
 				Count += 1;
 				}
 			}
-
+#endregion
 		}
 	}
 }

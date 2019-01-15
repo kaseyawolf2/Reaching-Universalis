@@ -85,4 +85,13 @@ namespace ListSpace {
 		public int ResultingAmount;
 		public int CraftingTime; 
 	}
+
+	public struct Stats {
+		public float Strength;
+		public float Intelligence;
+		public float Agility;
+		public float Charisma;
+		public float Constitution;
+
+	}
 }

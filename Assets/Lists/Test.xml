@@ -1,9 +1,10 @@
 <!-- <Item Name = "Item Name" Volume = "1" Mass = "1"/> -->
 <!-- <Recipe CraftingIngredients = "ID of Item,# needed,ID of Item,# needed" ResultID = "ID Made" AmountCrafted = "# Crafted" CraftingTime = "Time Taken to craft"/> -->
 <x>
-    <Item ID = "0" Name = "Test" Volume = "1" Mass = "1"/>
-    <Item ID = "1" Name = "Stone" Volume = "1" Mass = "1"/>
-    <Item ID = "2" Name = "Wood" Volume = "1" Mass = "1"/>
-    <Item ID = "3" Name = "Sticks" Volume = "1" Mass = "1"/>
-    <Recipe CraftingIngredients = "2,1" ResultID = "3" AmountCrafted = "5" CraftingTime = "5"/>
+    <Item ID = "0" Name = "Stone" Volume = "1" Mass = "1"/>
+    <Item ID = "1" Name = "Wood" Volume = "1" Mass = "1"/>
+    <Item ID = "2" Name = "Sticks" Volume = "1" Mass = "1"/>
+    <Recipe ResultID = "0" AmountCrafted = "1" CraftingTime = "5"/>
+    <Recipe ResultID = "1" AmountCrafted = "1" CraftingTime = "5"/>
+    <Recipe CraftingIngredients = "1,1,0,0" ResultID = "2" AmountCrafted = "5" CraftingTime = "5"/>
 </x>

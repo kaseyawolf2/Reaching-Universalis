@@ -5,7 +5,8 @@ public class Player : MonoBehaviour {
 
     #region Declerations
     //Keybinds
-	KeyCode KbJump = KeyCode.Space;
+	KeyCode KbJump = Statics.KbJump;
+	KeyCode KbInteract = Statics.KbInteract;
 
 
     public float movementSpeed = 5.0f;
@@ -20,7 +21,6 @@ public class Player : MonoBehaviour {
 
     //Interaction
     public Camera Cam;
-    public GameObject HitObj;
     
     //Raycasting
     RaycastHit hit;
@@ -86,26 +86,24 @@ public class Player : MonoBehaviour {
 
          #region Raycasting for Interactions
         return;
-        if (Input.GetButtonDown ("Inventory") || Input.GetButtonDown ("Harvest") /*|| Statics.ShowMouse == true */ ) {
-            RaycastTarget ();
-        }
-        else {
-            StartCoroutine(Wait (5)); 
+        if (Input.GetKeyDown(KbInteract) /*|| Statics.ShowMouse == true */ ) {
+            GameObject Temp = RaycastTarget ();
+            if(Temp != null){
+                
+            }
         }
         #endregion
      }
-    public void RaycastTarget () {
-        StopCoroutine (Wait (5));
-        gameObject.GetComponent<Inventory> ().TarObj = null;
+    GameObject RaycastTarget () {
+        GameObject HitObj;
         ray = new Ray (Cam.transform.position, Cam.transform.forward);
         if (Physics.Raycast (ray, out hit, 2)) {
             HitObj = hit.transform.gameObject;
-            gameObject.GetComponent<Inventory> ().TarObj = HitObj;
-            Debug.Log ("Hit something " + HitObj.name);
+            //gameObject.GetComponent<Inventory> ().TarObj = HitObj;
+            Debug.Log ("Hit : " + HitObj.name);
+            return HitObj;
+        }else{
+            return null;
         }
-    }
-     IEnumerator Wait (int Time) {
-        yield return new WaitForSeconds (Time);
-        gameObject.GetComponent<Inventory> ().TarObj = null;
     }
 }
