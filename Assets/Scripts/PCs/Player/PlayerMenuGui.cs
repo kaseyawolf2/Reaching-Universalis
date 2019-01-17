@@ -26,9 +26,10 @@ public class PlayerMenuGui : MonoBehaviour {
 	//Inventory 
 	List<ItemList> PlrItem;
 	List<ItemList> NPOItem;
-	int MaxNumEntrys = 0;
-	int MaxPage = 0;
-	int PageNum = 0;
+	public int MaxNumEntrys = 0;
+
+	Vector2 PCScroll;
+	Vector2 NPOScroll;
 	//Crafting 
 	List<CraftList> CraftingList;
 	void Start(){
@@ -115,54 +116,38 @@ public class PlayerMenuGui : MonoBehaviour {
 					),
 					""
 				);
-				//Up
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 1.235f) - InventoryBevel * 2,
-							(Screen.height / 6) + InventoryBevel * 3, 25, 25
-						),"^"
-					)
-				){
-					MaxPage = PlrItem.Count / MaxNumEntrys;
-					if (PageNum > 0 ) {
-						PageNum -= 1;
-					}
-				}
-				//Down
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 1.235f) - InventoryBevel * 2,
-							((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6,
-							25, 25
-						),
-					"v")
-				){
-					MaxPage = Mathf.CeilToInt (PlrItem.Count / MaxNumEntrys) - 1;
-					if(PageNum < MaxPage){
-						PageNum += 1;
-					}
-				}
 				int Count = 0;
-				//For each item display a line
-				foreach (ItemList item in PlrItem) {
-					if (Count - ((1+MaxNumEntrys)*PageNum) <= MaxNumEntrys) {
-						if( (((Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2)-((PageNum*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (Count+2)) + InventoryBevel * 2)+((PageNum*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
-							GUI.Label(
-								new Rect(
-									(Screen.width / 6) + InventoryBevel * 2,
-									(Screen.height / 6) + InventoryBevel + (FontHeight * (Count)) - ((PageNum*(MaxNumEntrys+1))*FontHeight) ,
-									(Screen.width / 3) - InventoryBevel * 2,
-									FontHeight
-								),
-								Count + " "  + item.ToString ()
-							);
-						}
-					}
-				//add one to the count so we know how much to displace the GUI.Label and know when to stop
-				Count += 1;
-				}
+
+				PCScroll = GUI.BeginScrollView(
+					new Rect(
+						(Screen.width / 6) + InventoryBevel,
+						(Screen.height / 6) + InventoryBevel, 
+						(Screen.width / 1.5f) - InventoryBevel*2, 
+						(Screen.height / 1.5f) - InventoryBevel*2
+					), PCScroll,
+					new Rect(
+						0,
+						0,
+						500,
+						PlrItem.Count*FontHeight
+					)
+					);
+					//For each item display a line
+					foreach (ItemList item in PlrItem) {
+						GUI.Label(
+							new Rect(
+								InventoryBevel,
+								(FontHeight * (Count)),
+								(Screen.width / 3) - InventoryBevel * 2,
+								FontHeight
+							)
+							,
+							Count + " "  + item.ToString ()
+						);
+					//add one to the count so we know how much to displace the GUI.Label and know when to stop
+					Count += 1;
+					}	
+				GUI.EndScrollView();
 
 			}
 #endregion
@@ -179,54 +164,50 @@ public class PlayerMenuGui : MonoBehaviour {
 					),
 					""
 				);
-				//Up
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 1.235f) - InventoryBevel * 2,
-							(Screen.height / 6) + InventoryBevel * 3, 25, 25
-						),"^"
-					)
-				){
-					MaxPage = PlrItem.Count / MaxNumEntrys;
-					if (PageNum > 0 ) {
-						PageNum -= 1;
-					}
-				}
-				//Down
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 1.235f) - InventoryBevel * 2,
-							((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6,
-							25, 25
-						),
-					"v")
-				){
-					MaxPage = Mathf.CeilToInt (PlrItem.Count / MaxNumEntrys) - 1;
-					if(PageNum < MaxPage){
-						PageNum += 1;
-					}
-				}
+
 				int PcCount = 0;
+				PCScroll = GUI.BeginScrollView(
+					new Rect(
+						(Screen.width / 6) + InventoryBevel + (Screen.width / 3),
+						(Screen.height / 6) + InventoryBevel, 
+						(Screen.width / 1.5f) - InventoryBevel*2 - (Screen.width / 3), 
+						(Screen.height / 1.5f) - InventoryBevel*2
+					),
+					PCScroll,
+					new Rect(
+						0,
+						0,
+						500,
+						PlrItem.Count*FontHeight
+					)
+				);
 				//For each item display a line
 				foreach (ItemList item in PlrItem) {
-					if (PcCount - ((1+MaxNumEntrys)*PageNum) <= MaxNumEntrys) {
-						if( (((Screen.height / 6) + (FontHeight * (PcCount+2)) + InventoryBevel * 2)-((PageNum*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (PcCount+2)) + InventoryBevel * 2)+((PageNum*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
-							GUI.Label(
-								new Rect(
-									(Screen.width / 2) + InventoryBevel * 2,
-									(Screen.height / 6) + InventoryBevel + (FontHeight * (PcCount)) - ((PageNum*(MaxNumEntrys+1))*FontHeight) ,
-									(Screen.width / 3) - InventoryBevel * 2,
-									FontHeight
-								),
-								PcCount + " "  + item.ToString ()
-							);
-						}
+					GUI.Label(
+						new Rect(
+							25,
+							(FontHeight * (PcCount)),
+							(Screen.width / 3) - InventoryBevel * 2,
+							FontHeight
+						),
+						PcCount + " "  + item.ToString ()
+					);
+					if(
+						GUI.Button(
+							new Rect(
+								0,
+								(FontHeight * (PcCount)),
+								20, 20
+							),
+						"<")
+					){
+						PlrItem.Remove(item);
+						NPOItem.Add(item);
 					}
 				//add one to the count so we know how much to displace the GUI.Label and know when to stop
 				PcCount += 1;
 				}
+				GUI.EndScrollView();
 				#endregion
 				#region Npo Inv
 				
@@ -239,54 +220,50 @@ public class PlayerMenuGui : MonoBehaviour {
 					),
 					""
 				);
-				//Up
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 2.1f) - InventoryBevel * 2,
-							(Screen.height / 6) + InventoryBevel * 3, 25, 25
-						),"^"
-					)
-				){
-					MaxPage = NPOItem.Count / MaxNumEntrys;
-					if (PageNum > 0 ) {
-						PageNum -= 1;
-					}
-				}
-				//Down
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 2.1f) - InventoryBevel * 2,
-							((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6,
-							25, 25
-						),
-					"v")
-				){
-					MaxPage = Mathf.CeilToInt (NPOItem.Count / MaxNumEntrys) - 1;
-					if(PageNum < MaxPage){
-						PageNum += 1;
-					}
-				}
 				int NPOCount = 0;
+
+				NPOScroll = GUI.BeginScrollView(
+					new Rect(
+						(Screen.width / 6) + InventoryBevel,
+						(Screen.height / 6) + InventoryBevel, 
+						(Screen.width / 1.5f) - InventoryBevel*2 - (Screen.width / 3), 
+						(Screen.height / 1.5f) - InventoryBevel*2
+					),
+					NPOScroll,
+					new Rect(
+						0,
+						0,
+						500,
+						NPOItem.Count*FontHeight
+					)
+				);
 				//For each item display a line
 				foreach (ItemList item in NPOItem) {
-					if (NPOCount - ((1+MaxNumEntrys)*PageNum) <= MaxNumEntrys) {
-						if( (((Screen.height / 6) + (FontHeight * (NPOCount+2)) + InventoryBevel * 2)-((PageNum*(MaxNumEntrys+1))*FontHeight)-25 > ((Screen.height / 6) + InventoryBevel * 3)) || (((Screen.height / 6) + (FontHeight * (NPOCount+2)) + InventoryBevel * 2)+((PageNum*(MaxNumEntrys+1))*FontHeight) < (((Screen.height / 1.5f) - InventoryBevel*2)+(Screen.height / 6)-InventoryBevel*6 - FontHeight*1) )  ){
-							GUI.Label(
-								new Rect(
-									(Screen.width / 6) + InventoryBevel * 2,
-									(Screen.height / 6) + InventoryBevel + (FontHeight * (NPOCount)) - ((PageNum*(MaxNumEntrys+1))*FontHeight) ,
-									(Screen.width / 3) - InventoryBevel * 2,
-									FontHeight
-								),
-								NPOCount + " "  + item.ToString ()
-							);
-						}
+					GUI.Label(
+						new Rect(
+							0,
+							(FontHeight * (NPOCount)),
+							(Screen.width / 3) - InventoryBevel * 2,
+							FontHeight
+						),
+						NPOCount + " "  + item.ToString ()
+					);
+					if(
+						GUI.Button(
+							new Rect(
+								(Screen.width / 1.5f) - InventoryBevel*2 - (Screen.width / 3) - 20,
+								(FontHeight * (NPOCount)),
+								20, 20
+							),
+						">")
+					){
+						PlrItem.Add(item);
+						NPOItem.Remove(item);
 					}
 				//add one to the count so we know how much to displace the GUI.Label and know when to stop
 				NPOCount += 1;
 				}
+				GUI.EndScrollView();
 				#endregion
 
 			}
@@ -306,29 +283,27 @@ public class PlayerMenuGui : MonoBehaviour {
 
 				int Count = 0;
 				foreach (CraftList recipe in CraftingList) {
-					if (Count - ((1+MaxNumEntrys)*PageNum) <= MaxNumEntrys) {
-						GUI.Label(
+					GUI.Label(
+						new Rect(
+							(Screen.width / 6) + InventoryBevel * 2,
+							(Screen.height / 6) + InventoryBevel + (FontHeight * (Count)) ,
+							(Screen.width / 3) - InventoryBevel * 2,
+							FontHeight
+						),
+						recipe.Recipe.ResultingItem.Name
+					);
+					if(
+						GUI.Button(
 							new Rect(
-								(Screen.width / 6) + InventoryBevel * 2,
+								(Screen.width / 2),
 								(Screen.height / 6) + InventoryBevel + (FontHeight * (Count)) ,
 								(Screen.width / 3) - InventoryBevel * 2,
 								FontHeight
 							),
-							recipe.Recipe.ResultingItem.Name
-						);
-						if(
-							GUI.Button(
-								new Rect(
-									(Screen.width / 2),
-									(Screen.height / 6) + InventoryBevel + (FontHeight * (Count)) ,
-									(Screen.width / 3) - InventoryBevel * 2,
-									FontHeight
-								),
-								"Craft" 
-							)
-						){
-							gameObject.GetComponent<Crafting>().Craft(recipe.Recipe);
-						}
+							"Craft" 
+						)
+					){
+						gameObject.GetComponent<Crafting>().Craft(recipe.Recipe);
 					}
 				Count += 1;
 				}
