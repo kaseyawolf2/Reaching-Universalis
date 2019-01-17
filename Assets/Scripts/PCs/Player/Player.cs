@@ -84,12 +84,17 @@ public class Player : MonoBehaviour {
         #endregion
 
 
-         #region Raycasting for Interactions
-        return;
-        if (Input.GetKeyDown(KbInteract) /*|| Statics.ShowMouse == true */ ) {
+        #region Raycasting for Interactions
+        if (Input.GetKeyDown(KbInteract) ) {
             GameObject Temp = RaycastTarget ();
             if(Temp != null){
-                
+                bool hasInv = false;
+                if(Temp.GetComponent("Inventory") != null){
+                    hasInv = true;
+                }
+
+
+                gameObject.GetComponent<PlayerMenuGui>().ShowInteract(Temp);
             }
         }
         #endregion
