@@ -5,9 +5,6 @@ using ListSpace;
 
 public class Crafting : MonoBehaviour {
 
-	void Start (){
-
-	}
 
 	bool CanCraft(Recipe recipe) {
 		Inventory Inv = gameObject.GetComponent<Inventory>();

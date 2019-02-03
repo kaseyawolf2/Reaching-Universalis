@@ -19,6 +19,8 @@ public class PlayerMenuGui : MonoBehaviour {
 	bool CraftTog = false;
 	bool InteractTog = false;
 	bool FullBackground = false;
+	//Interact Togs
+	bool HasInv = false;
 	
 	//Other
 	string MenuString;
@@ -88,7 +90,10 @@ public class PlayerMenuGui : MonoBehaviour {
 		MenuTog = true;
 		InteractTog = true;
 		MenuString = Obj.name;
-		NPOItem = Obj.GetComponent<Inventory>().HeldItems;
+		HasInv = (Obj.GetComponent<Inventory>() != null);
+		if(HasInv){
+			NPOItem = Obj.GetComponent<Inventory>().HeldItems;
+		}
 	}
 
 	void OnGUI(){
@@ -327,18 +332,20 @@ public class PlayerMenuGui : MonoBehaviour {
 						(Screen.height/2.5f) - InventoryBevel*2
 					),""
 				);
-				if(
-					GUI.Button(
-						new Rect(
-							(Screen.width / 2.5f) + InventoryBevel*2,
-							(Screen.height / 3) + InventoryBevel*2,
-							(Screen.width / 6) - InventoryBevel*4,
-							FontHeight
-						),
-						"Inventory" 
-					)
-				){
-					ShowInvTran();
+				if(HasInv){
+					if(
+						GUI.Button(
+							new Rect(
+								(Screen.width / 2.5f) + InventoryBevel*2,
+								(Screen.height / 3) + InventoryBevel*2,
+								(Screen.width / 6) - InventoryBevel*4,
+								FontHeight
+							),
+							"Inventory" 
+						)
+					){
+						ShowInvTran();
+					}
 				}
 			}
 #endregion
