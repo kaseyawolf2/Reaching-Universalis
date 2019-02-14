@@ -18,38 +18,38 @@ public class Crafting : MonoBehaviour {
 				} else {
 					Debug.Log("Not Enough : " + Req.Item.Name + " | Need : " + Req.Amount + " | Have : " + Inv.CheckItemCount(Req.Item) + " || Attempting To Craft missing Prereq");
 					//findout if pc know how to craft prereq if they do then attempt crafting of item if not return false
-					List<CraftList> PreCrafts =  GetRecipesByProduct(Req.Item);
-					if( PreCrafts.Count == 0){
-						Debug.Log("No Known Prereq Recipes");
-					}else{
-						foreach (var PreRec in PreCrafts)
-						{
-							if(CanCraft(PreRec.Recipe)){
-								Craft(PreRec.Recipe);
-								break;
-							}
-						}
-						continue;
-					}
+					// List<CraftList> PreCrafts =  GetRecipesByProduct(Req.Item);
+					// if( PreCrafts.Count == 0){
+					// 	Debug.Log("No Known Prereq Recipes");
+					// }else{
+					// 	foreach (var PreRec in PreCrafts)
+					// 	{
+					// 		if(CanCraft(PreRec.Recipe)){
+					// 			Craft(PreRec.Recipe);
+					// 			break;
+					// 		}
+					// 	}
+					// 	continue;
+					// }
 					
 					return false;
 				}
 			} else {
 				Debug.Log("Inventory Does Not Contain : " + Req.Item.Name);
 					
-					List<CraftList> PreCrafts =  GetRecipesByProduct(Req.Item);
-					if( PreCrafts.Count == 0){
-						Debug.Log("No Known Prereq Recipes");
-					}else{
-						foreach (var PreRec in PreCrafts)
-						{
-							if(CanCraft(PreRec.Recipe)){
-								await Craft(PreRec.Recipe);
-								break;
-							}
-						}
-						continue;
-					}
+					// List<CraftList> PreCrafts =  GetRecipesByProduct(Req.Item);
+					// if( PreCrafts.Count == 0){
+					// 	Debug.Log("No Known Prereq Recipes");
+					// }else{
+					// 	foreach (var PreRec in PreCrafts)
+					// 	{
+					// 		if(CanCraft(PreRec.Recipe)){
+					// 			Craft(PreRec.Recipe);
+					// 			break;
+					// 		}
+					// 	}
+					// 	continue;
+					// }
 
 				return false;
 			}
