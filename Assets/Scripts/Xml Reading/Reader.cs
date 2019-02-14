@@ -14,12 +14,8 @@ public class Reader : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		BaseDir = System.IO.Path.GetFullPath("Assets");
-
-		Statics.Items = LoadItemList("/Lists/Test.xml");
-		Statics.Recipes = LoadCraftingList("/Lists/Test.xml");
-		Destroy(this);
 	}
-	List<ItemList> LoadItemList(string RelFilePath) {
+	public List<ItemList> LoadItemList(string RelFilePath) {
 		string TempDir = BaseDir + @RelFilePath;
 		//Debug.Log(TempDir);
 		List<ItemList> TempList = new List<ItemList> ();
@@ -49,7 +45,7 @@ public class Reader : MonoBehaviour {
             return TempList;
         }
 	}
-	Item FindByID(int ID, List<ItemList> ListToSearch){
+	public Item FindByID(int ID, List<ItemList> ListToSearch){
 		Item Temp = new Item { ID = ID };
 		foreach(ItemList Item in ListToSearch){
 			if(Item.Item.ID == Temp.ID){
@@ -58,7 +54,7 @@ public class Reader : MonoBehaviour {
 		}
 		return Temp;
 	}
-	List<CraftList> LoadCraftingList(string RelFilePath) {
+	public List<CraftList> LoadCraftingList(string RelFilePath) {
 		string TempDir = BaseDir + @RelFilePath;
 		//Debug.Log(TempDir);
 		List<CraftList> TempList = new List<CraftList> ();

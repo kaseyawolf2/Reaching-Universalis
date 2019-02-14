@@ -21,21 +21,25 @@ public class PlayerMenuGui : MonoBehaviour {
 	bool FullBackground = false;
 	//Interact Togs
 	bool HasInv = false;
+	bool HasCraft = false;
 	
 	//Other
 	string MenuString;
+	GameObject Target;
 
 	//Inventory 
 	List<ItemList> PlrItem;
 	List<ItemList> NPOItem;
-	public int MaxNumEntrys = 0;
+	int MaxNumEntrys = 0;
 
 	Vector2 PCScroll;
 	Vector2 NPOScroll;
 	//Crafting 
 	List<CraftList> CraftingList;
+
 	void Start(){
 		PlrItem = gameObject.GetComponent<Inventory>().HeldItems;
+		
 		
 		MaxNumEntrys =  (int) ((((Screen.height / 1.5f) - InventoryBevel * 2) / FontHeight)-1);
 	}
@@ -45,12 +49,14 @@ public class PlayerMenuGui : MonoBehaviour {
 			//PlrItem = Statics.Items;
             ShowInv ();
         }
-		if(Input.GetKeyDown(KbCraft)){
-			CraftingList = Statics.Recipes;
-            ShowCraft ();
+		if(Input.GetKeyDown(KbCraft)){			
+			CraftingList = gameObject.GetComponent<Attributes>().KnownCraftRes;
+            Target = gameObject;
+			ShowCraft ();
         }
 		if(Input.GetKeyDown(KeyCode.Escape)){
             MenuTog = false;
+			Target = gameObject;
         }
 	}
 	void HideOthers(){
@@ -91,8 +97,13 @@ public class PlayerMenuGui : MonoBehaviour {
 		InteractTog = true;
 		MenuString = Obj.name;
 		HasInv = (Obj.GetComponent<Inventory>() != null);
+		HasCraft = (Obj.GetComponent<Crafting>() != null && Obj.GetComponent<Crafting>().AllowOtherCraft);
 		if(HasInv){
 			NPOItem = Obj.GetComponent<Inventory>().HeldItems;
+		}
+		if(HasCraft){
+			CraftingList = Obj.GetComponent<Attributes>().KnownCraftRes;
+			Target = Obj;
 		}
 	}
 
@@ -208,6 +219,7 @@ public class PlayerMenuGui : MonoBehaviour {
 					){
 						PlrItem.Remove(item);
 						NPOItem.Add(item);
+						return;
 					}
 				//add one to the count so we know how much to displace the GUI.Label and know when to stop
 				PcCount += 1;
@@ -264,6 +276,7 @@ public class PlayerMenuGui : MonoBehaviour {
 					){
 						PlrItem.Add(item);
 						NPOItem.Remove(item);
+						return;
 					}
 				//add one to the count so we know how much to displace the GUI.Label and know when to stop
 				NPOCount += 1;
@@ -308,7 +321,7 @@ public class PlayerMenuGui : MonoBehaviour {
 							"Craft" 
 						)
 					){
-						gameObject.GetComponent<Crafting>().Craft(recipe.Recipe);
+						Target.GetComponent<Crafting>().Craft(recipe.Recipe);
 					}
 				Count += 1;
 				}
@@ -316,6 +329,7 @@ public class PlayerMenuGui : MonoBehaviour {
 #endregion
 #region Interaction Menu
 			if(InteractTog) {
+				int NumMenus = 0;
 				GUI.Box (
 					new Rect (
 						Screen.width/2.5f,
@@ -337,7 +351,7 @@ public class PlayerMenuGui : MonoBehaviour {
 						GUI.Button(
 							new Rect(
 								(Screen.width / 2.5f) + InventoryBevel*2,
-								(Screen.height / 3) + InventoryBevel*2,
+								(Screen.height / 3) + InventoryBevel*2 + (NumMenus * FontHeight),
 								(Screen.width / 6) - InventoryBevel*4,
 								FontHeight
 							),
@@ -346,6 +360,23 @@ public class PlayerMenuGui : MonoBehaviour {
 					){
 						ShowInvTran();
 					}
+					NumMenus++;
+				}
+				if(HasCraft){
+					if(
+						GUI.Button(
+							new Rect(
+								(Screen.width / 2.5f) + InventoryBevel*2 ,
+								(Screen.height / 3) + InventoryBevel*2 + (NumMenus * FontHeight),
+								(Screen.width / 6) - InventoryBevel*4,
+								FontHeight
+							),
+							"Crafting" 
+						)
+					){
+						ShowCraft();
+					}
+					NumMenus++;
 				}
 			}
 #endregion

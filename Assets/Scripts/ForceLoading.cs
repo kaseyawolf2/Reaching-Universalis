@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Test : MonoBehaviour
+using UnityEngine.SceneManagement;
+public class ForceLoading : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<Attributes>().KnownCraftRes = Statics.Recipes;
+    
+     if(!Statics.ImportFinished){
+        SceneManager.LoadScene("Start");
+     }   
     }
 }

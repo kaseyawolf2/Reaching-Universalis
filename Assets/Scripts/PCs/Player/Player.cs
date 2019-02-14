@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using ListSpace;
+
 [RequireComponent (typeof (CharacterController))]
 public class Player : MonoBehaviour {
 
@@ -26,6 +29,8 @@ public class Player : MonoBehaviour {
     RaycastHit hit;
     Ray ray;
 
+    
+
     #endregion
 
     CharacterController characterController;
@@ -37,9 +42,12 @@ public class Player : MonoBehaviour {
             print ("No camera");
 
         }
-
         Cam = Camera.main;
 
+
+        foreach(CraftList Res in Statics.Recipes){
+            gameObject.GetComponent<Attributes>().KnownCraftRes.Add(Res);
+        }
     }
 
     void Update () {
