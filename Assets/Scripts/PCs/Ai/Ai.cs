@@ -17,7 +17,7 @@ public class Ai : MonoBehaviour {
     }
 
 
-#region Basic Fuctions
+#region Basic Functions
     GameObject Find (string TagtoFind, string ItemNameToFind, int SearchStyle = 1) {
         //Search Styles #defaults to 1
         // 0 - No Item
@@ -76,8 +76,14 @@ public class Ai : MonoBehaviour {
     }
     
 #endregion
+#region Mid Level Functions
 
 
+
+
+
+
+#endregion
 
 
 }
