@@ -18,6 +18,6 @@ public class StartUp : MonoBehaviour
 
 
         Statics.ImportFinished = true;
-        SceneManager.LoadScene("Test");
+        SceneManager.LoadScene("MainMenu");
     }
 }
